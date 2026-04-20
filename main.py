@@ -41,6 +41,13 @@ class snake_game:
         self.frame_create_player.pack(expand=True, fill="both")
         cp(self.frame_create_player)
 
+        back_button = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu)
+        back_button.pack(pady=10)
+
+    def show_menu(self):
+        self.frame_create_player.pack_forget()
+        self.frame_buttons.pack(expand=True)
+
     def select_player(self):
         print("Spieler aussuchen")
     def play(self):
