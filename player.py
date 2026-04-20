@@ -5,4 +5,6 @@ def create_player(frame):
     label.pack(pady=(20, 5))
 
     entry = tk.Entry(frame)
-    entry.pack(pady=(0, 20))
+    entry.pack(pady=10)
+
+    return entry

@@ -5,6 +5,7 @@ import sqlite3
 import tkinter.messagebox as mb
 
 from player import create_player as cp
+from database import save_player
 
 class snake_game:
     def __init__(self):
@@ -33,10 +34,13 @@ class snake_game:
 
         #creat player
         self.frame_create_player = tk.Frame(self.root)
-        cp(self.frame_create_player)
+        self.entry = cp(self.frame_create_player)
 
-        back_button = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu)
-        back_button.pack(pady=10)
+        self.back_button = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu)
+        self.back_button.pack(pady=10)
+
+        self.save_button = tk.Button(self.frame_create_player,text="Speichern",command=self.create_player_save)
+        self.save_button.pack(pady=10)
 
         #select player
 
@@ -49,6 +53,10 @@ class snake_game:
     def show_menu(self):
         self.frame_create_player.pack_forget()
         self.frame_buttons.pack(expand=True)
+
+    def create_player_save(self):
+        name = self.entry.get()
+        save_player(name)
 
     def select_player(self):
         print("Spieler aussuchen")
