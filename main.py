@@ -4,16 +4,19 @@ import tkinter as tk
 import sqlite3
 import tkinter.messagebox as mb
 
+from player import create_player as cp
+
 class snake_game:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Snake Game")
         self.root.geometry("400x400")
 
+        #menü
         self.frame_buttons = tk.Frame(self.root)
-        self.frame_buttons.pack()
+        self.frame_buttons.pack(expand=True)
 
-        self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.create_player)
+        self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.show_create_player)
         self.button_create_player.pack(pady=10)
 
         self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.select_player)
@@ -28,10 +31,16 @@ class snake_game:
         self.button_exit = tk.Button(self.frame_buttons, text="Beenden", command=self.exit_game)
         self.button_exit.pack(pady=10)
 
+        #creat player
+        self.frame_create_player = tk.Frame(self.root)
+
         self.root.mainloop()
 
-    def create_player(self):
-        print("Spieler wird erstellt")
+    def show_create_player(self):
+        self.frame_buttons.pack_forget()
+        self.frame_create_player.pack(expand=True, fill="both")
+        cp(self.frame_create_player)
+
     def select_player(self):
         print("Spieler aussuchen")
     def play(self):
