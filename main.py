@@ -60,6 +60,21 @@ class snake_game:
         name = self.entry.get()
         save_player(name)
 
+        self.reload_players()
+
+    def reload_players(self):
+        self.listbox.delete(0, tk.END)
+        conn = sqlite3.connect("snake.db")
+        c = conn.cursor()
+
+        c.execute("SELECT name FROM players")
+        players = c.fetchall()
+
+        for p in players:
+            self.listbox.insert(tk.END, p[0])
+
+        conn.close()
+
     def show_create_player(self):
         self.frame_buttons.pack_forget()
         self.frame_create_player.pack(expand=True, fill="both")
