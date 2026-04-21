@@ -51,6 +51,9 @@ class snake_game:
         self.save_button_select = tk.Button(self.frame_select_player, text="Auswählen", command=self.select_player_save)
         self.save_button_select.pack(pady=10)
 
+        self.clear_button_select = tk.Button(self.frame_select_player,text="Auswahl löschen",command=self.delete_player)
+        self.clear_button_select.pack(pady=10)
+
         self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu_1)
         self.back_button_select.pack(pady=10)
 
@@ -94,6 +97,22 @@ class snake_game:
     def show_menu_1(self):
         self.frame_select_player.pack_forget()
         self.frame_buttons.pack(expand=True)
+
+    def delete_player(self):
+        selected = self.listbox.get(tk.ACTIVE)
+
+        if not selected:
+            mb.showwarning("Fehler", "Bitte Spieler auswählen")
+            return
+
+        conn = sqlite3.connect("snake.db")
+        c = conn.cursor()
+
+        c.execute("DELETE FROM players WHERE name = ?", (selected,))
+        conn.commit()
+        conn.close()
+
+        self.reload_players()
 
     def play(self):
         print("play")
