@@ -81,7 +81,7 @@ class snake_game:
     def show_create_player(self):
         self.frame_buttons.pack_forget()
         self.frame_create_player.pack(expand=True, fill="both")
-
+    #zurück creatplayer auswahl
     def show_menu(self):
         self.frame_create_player.pack_forget()
         self.frame_buttons.pack(expand=True)
@@ -93,7 +93,7 @@ class snake_game:
     def select_player_save(self):
         selected = self.listbox.get(self.listbox.curselection())
         mb.showinfo("Gewählt",selected)
-
+    #zurück player auswahl
     def show_menu_1(self):
         self.frame_select_player.pack_forget()
         self.frame_buttons.pack(expand=True)
@@ -116,8 +116,41 @@ class snake_game:
 
     def play(self):
         print("play")
+
     def score(self):
-        print("score")
+        self.frame_button.pack_forget()
+        self.score()
+
+    def score(self):
+        self.frame_buttons.pack_forget()
+        self.frame_score = tk.Frame(self.root)
+        self.frame_score.pack(expand=True, fill="both")
+
+        label = tk.Label(self.frame_score, text="Score:")
+        label.pack(pady=10)
+
+        self.listbox = tk.Listbox(self.frame_score, width=25)
+        self.listbox.pack(pady=10)
+
+        conn = sqlite3.connect("snake.db")
+        c = conn.cursor()
+
+        c.execute("SELECT name, score FROM players")
+        scores = c.fetchall()
+
+        for s in scores:
+            self.listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte")
+
+        conn.close()
+
+        button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2)
+        button_back.pack(pady=10)
+
+    #zurück score-menü
+    def back_to_menu_2(self):
+        self.frame_score.pack_forget()
+        self.frame_buttons.pack(expand=True)
+
     def exit_game(self):
         self.root.destroy()
 
