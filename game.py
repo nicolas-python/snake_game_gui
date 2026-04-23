@@ -5,4 +5,9 @@ def snake():
     root.title("Snake Game")
     root.geometry("400x400")
 
+    # Canvas = Zeichenfläche in Tkinter
+    # Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
+    canvas = tk.Canvas(root, width=400, height=400, bg="black")
+    canvas.pack()
+
     root.mainloop()
