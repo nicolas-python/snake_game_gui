@@ -1,6 +1,31 @@
 import tkinter as tk
 
+direction = None
+x = 200
+y = 200
+canvas = None
+snake_part = None
+
+#zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
+def go_left(event):
+    global direction
+    direction = "left"
+
+def go_right(event):
+    global direction
+    direction = "right"
+
+def go_up(event):
+    global direction
+    direction = "up"
+
+def go_down(event):
+    global direction
+    direction = "down"
+
+
 def snake():
+    global canvas, snake_part ,x ,y
     root = tk.Tk()
     root.title("Snake Game")
     root.geometry("400x400")
@@ -10,11 +35,41 @@ def snake():
     canvas = tk.Canvas(root, width=400, height=400, bg="black")
     canvas.pack()
 
-    #schlange model
-    canvas.create_rectangle(190, 190, 210, 210, fill="green")
+    #start position
+    x = 200
+    y = 200
 
-    #map
+    #schlange model
+    snake_part = canvas.create_rectangle(190, 190, 210, 210, fill="green")
 
     #steuerung (pfeiltasten)
+    root.bind("<Left>", go_left)
+    root.bind("<Right>", go_right)
+    root.bind("<Up>", go_up)
+    root.bind("<Down>", go_down)
 
+    move_snake()
     root.mainloop()
+
+    # map
+
+#bewegung aktualisierung
+def move_snake():
+    global x, y, direction, canvas, snake_part
+
+    step = 20
+
+    if direction == "left":
+        x -= step
+    elif direction == "right":
+        x += step
+    elif direction == "up":
+        y -= step
+    elif direction == "down":
+        y += step
+
+    #alte Position löschen/bewegen
+    canvas.coords(snake_part, x, y, x + 20, y + 20)             #coords =ändere die Position
+
+    #aktualisierung
+    canvas.after(200, move_snake)
