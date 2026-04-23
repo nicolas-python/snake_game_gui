@@ -8,6 +8,7 @@ from player import create_player as cp
 from player import select_player as sp
 from database import init_db
 from database import save_player
+from game import snake
 
 class snake_game:
     def __init__(self):
@@ -115,7 +116,7 @@ class snake_game:
         self.reload_players()
 
     def play(self):
-        print("play")
+        snake()
 
     def score(self):
         self.frame_button.pack_forget()
