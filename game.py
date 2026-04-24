@@ -45,9 +45,10 @@ def snake():
     snake_part.append(body)
     head = canvas.create_oval(body_x+20, body_y, body_x+50, body_y+20, fill = "red")
     snake_part.append(head)
+    new_part = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
+    snake_part.append(new_part)
 
-
-
+    root.bind("<space>", grow_snake)
 
     #steuerung (pfeiltasten)
     root.bind("<Left>", go_left)
@@ -58,7 +59,15 @@ def snake():
     move_snake()
     root.mainloop()
 
-    # map
+def grow_snake(event):
+    last = snake_part[-1]                       #-1 = letzes element der liste
+
+    coords = canvas.coords(last)
+    x1, y1, x2, y2 = coords
+
+    new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="green")
+    snake_part.append(new_part)
+
 
 #bewegung aktualisierung
 def move_snake():
@@ -78,6 +87,7 @@ def move_snake():
     #alte Position löschen/bewegen
     canvas.coords(snake_part[0], x, y, x + 20, y + 20)             #coords =ändere die Position
     canvas.coords(snake_part[1], x+20, y, x + 50, y + 20)
+    canvas.coords(snake_part[2], x, y, x + 20, y + 20)
 
     #aktualisierung
     canvas.after(200, move_snake)
