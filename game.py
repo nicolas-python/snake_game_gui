@@ -5,6 +5,7 @@ x = 200
 y = 200
 canvas = None
 snake_part = None
+snake_part_head = None
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -25,22 +26,26 @@ def go_down(event):
 
 
 def snake():
-    global canvas, snake_part ,x ,y
+    global canvas, snake_part,snake_part_head ,x ,y
     root = tk.Tk()
     root.title("Snake Game")
     root.geometry("400x400")
 
-    # Canvas = Zeichenfläche in Tkinter
-    # Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
+    #Canvas = Zeichenfläche in Tkinter
+    #Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
     canvas = tk.Canvas(root, width=400, height=400, bg="black")
     canvas.pack()
 
     #start position
-    x = 200
-    y = 200
+    body_x = 200
+    body_y = 200
 
     #schlange model
-    snake_part = canvas.create_rectangle(190, 190, 210, 210, fill="green")
+    snake_part = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
+    snake_part_head = canvas.create_oval(body_x+20, body_y, body_x+50, body_y+20, fill = "red")
+
+
+
 
     #steuerung (pfeiltasten)
     root.bind("<Left>", go_left)
@@ -55,7 +60,7 @@ def snake():
 
 #bewegung aktualisierung
 def move_snake():
-    global x, y, direction, canvas, snake_part
+    global x, y, direction, canvas, snake_part, snake_part_head
 
     step = 20
 
@@ -70,6 +75,7 @@ def move_snake():
 
     #alte Position löschen/bewegen
     canvas.coords(snake_part, x, y, x + 20, y + 20)             #coords =ändere die Position
+    canvas.coords(snake_part_head, x+20, y, x + 50, y + 20)
 
     #aktualisierung
     canvas.after(200, move_snake)
