@@ -5,7 +5,6 @@ x = 200
 y = 200
 canvas = None
 snake_part = None
-snake_part_head = None
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -26,7 +25,7 @@ def go_down(event):
 
 
 def snake():
-    global canvas, snake_part,snake_part_head ,x ,y
+    global canvas, snake_part,x ,y
     root = tk.Tk()
     root.title("Snake Game")
     root.geometry("400x400")
@@ -41,8 +40,11 @@ def snake():
     body_y = 200
 
     #schlange model
-    snake_part = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
-    snake_part_head = canvas.create_oval(body_x+20, body_y, body_x+50, body_y+20, fill = "red")
+    snake_part = []
+    body = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
+    snake_part.append(body)
+    head = canvas.create_oval(body_x+20, body_y, body_x+50, body_y+20, fill = "red")
+    snake_part.append(head)
 
 
 
@@ -60,7 +62,7 @@ def snake():
 
 #bewegung aktualisierung
 def move_snake():
-    global x, y, direction, canvas, snake_part, snake_part_head
+    global x, y, direction, canvas, snake_part
 
     step = 20
 
@@ -74,8 +76,8 @@ def move_snake():
         y += step
 
     #alte Position löschen/bewegen
-    canvas.coords(snake_part, x, y, x + 20, y + 20)             #coords =ändere die Position
-    canvas.coords(snake_part_head, x+20, y, x + 50, y + 20)
+    canvas.coords(snake_part[0], x, y, x + 20, y + 20)             #coords =ändere die Position
+    canvas.coords(snake_part[1], x+20, y, x + 50, y + 20)
 
     #aktualisierung
     canvas.after(200, move_snake)
