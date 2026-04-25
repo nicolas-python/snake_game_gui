@@ -41,12 +41,12 @@ def snake():
 
     #schlange model
     snake_part = []
-    body = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
-    snake_part.append(body)
-    head = canvas.create_oval(body_x+20, body_y, body_x+50, body_y+20, fill = "red")
+
+    head = canvas.create_oval(body_x+20, body_y, body_x+40, body_y+20, fill = "red")
     snake_part.append(head)
-    new_part = canvas.create_rectangle(body_x, body_y, body_x+20, body_y+20, fill="green")
-    snake_part.append(new_part)
+
+    body = canvas.create_rectangle(body_x, body_y, body_x + 20, body_y + 20, fill="green")
+    snake_part.append(body)
 
     root.bind("<space>", grow_snake)
 
@@ -65,7 +65,7 @@ def grow_snake(event):
     coords = canvas.coords(last)
     x1, y1, x2, y2 = coords
 
-    new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="green")
+    new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
     snake_part.append(new_part)
 
 
@@ -84,10 +84,17 @@ def move_snake():
     elif direction == "down":
         y += step
 
-    #alte Position löschen/bewegen
-    canvas.coords(snake_part[0], x, y, x + 20, y + 20)             #coords =ändere die Position
-    canvas.coords(snake_part[1], x+20, y, x + 50, y + 20)
-    canvas.coords(snake_part[2], x, y, x + 20, y + 20)
+    # alte Position löschen/bewegen
+    canvas.coords(snake_part[0],x, y,x + 20, y + 20)   #setzt den kopf auf einen neue position
+    prev_x, prev_y = x, y               #Startpunkt der Bewegung
+
+    for i in range(1, len(snake_part)):
+        start_x, start_y, end_x, end_y = canvas.coords(snake_part[i])
+        canvas.coords(snake_part[i], prev_x, prev_y, prev_x + 20 , prev_y + 20)               #coords =ändere die Position
+
+        prev_x, prev_y = start_x, start_y           #aktuelle Position
 
     #aktualisierung
     canvas.after(200, move_snake)
+
+snake()
