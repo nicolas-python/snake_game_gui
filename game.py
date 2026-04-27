@@ -45,6 +45,7 @@ def snake():
     snake_part.append(head)
 
     body = canvas.create_rectangle(body_x, body_y, body_x + 20, body_y + 20, fill="green")
+    canvas.itemconfig(body, state="hidden")
     snake_part.append(body)
 
     root.bind("<space>", grow_snake)
@@ -71,6 +72,10 @@ def grow_snake(event):
 #bewegung aktualisierung
 def move_snake():
     global x, y, direction, canvas, snake_part
+
+    # Körper sichtbar machen beim ersten Move
+    if canvas.itemcget(snake_part[1], "state") == "hidden" and direction is not None:
+        canvas.itemconfig(snake_part[1], state="normal")
 
     step = 20
 
