@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.messagebox as mb
 
 direction = None
 x = 200
@@ -101,7 +102,26 @@ def move_snake():
         px1, py1, px2, py2 = old_positions[i - 1]
         canvas.coords(snake_part[i],px1, py1,px1 + 20, py1 + 20)              #coords =ändere die Position
 
+    if collision():
+        return
+
     #aktualisierung
     canvas.after(200, move_snake)
+
+def collision():
+
+    head_coords = canvas.coords(snake_part[0])
+    for part in snake_part[1:]:
+        if canvas.coords(part) == head_coords:
+            game_over()
+
+        else :
+            game_over()
+
+def game_over():
+    global canvas
+
+    mb.showinfo("Game Over","Game Over!")
+    canvas.delete("all")
 
 snake()
