@@ -107,6 +107,7 @@ def move_snake():
         canvas.coords(snake_part[i],px1, py1,px1 + 20, py1 + 20)              #coords =ändere die Position
 
     if collision():
+        game_over()
         return
 
     #aktualisierung
@@ -117,17 +118,15 @@ def collision():
         return False
 
     head_coords = canvas.coords(snake_part[0])
+
     for part in snake_part[1:]:
         if canvas.coords(part) == head_coords:
-            game_over()
+            return True
 
-        else :
-            game_over()
+    return False
 
 def game_over():
     global canvas
 
     mb.showinfo("Game Over","Game Over!")
     canvas.delete("all")
-
-snake()
