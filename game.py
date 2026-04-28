@@ -6,6 +6,7 @@ x = 200
 y = 200
 canvas = None
 snake_part = None
+moved = False
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -72,7 +73,10 @@ def grow_snake(event):
 
 #bewegung aktualisierung
 def move_snake():
-    global x, y, direction, canvas, snake_part
+    global x, y, direction, canvas, snake_part,moved
+
+    if direction is not None:
+        moved = True
 
     # Körper sichtbar machen beim ersten Move
     if canvas.itemcget(snake_part[1], "state") == "hidden" and direction is not None:
@@ -109,6 +113,8 @@ def move_snake():
     canvas.after(200, move_snake)
 
 def collision():
+    if not moved:
+        return False
 
     head_coords = canvas.coords(snake_part[0])
     for part in snake_part[1:]:
