@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as mb
+import random
 
 direction = None
 x = 200
@@ -7,6 +8,7 @@ y = 200
 canvas = None
 snake_part = None
 moved = False
+food = None
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -50,8 +52,6 @@ def snake():
     canvas.itemconfig(body, state="hidden")
     snake_part.append(body)
 
-    root.bind("<space>", grow_snake)
-
     #steuerung (pfeiltasten)
     root.bind("<Left>", go_left)
     root.bind("<Right>", go_right)
@@ -59,6 +59,7 @@ def snake():
     root.bind("<Down>", go_down)
 
     move_snake()
+    spawn_food()
     root.mainloop()
 
 def grow_snake(event):
@@ -69,6 +70,16 @@ def grow_snake(event):
 
     new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
     snake_part.append(new_part)
+
+
+def spawn_food():
+    global food
+
+    food_x = random.randint(1,20)
+    food_y = random.randint(1,20)
+
+    food = canvas.create_oval(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
+
 
 
 #bewegung aktualisierung
@@ -130,3 +141,5 @@ def game_over():
 
     mb.showinfo("Game Over","Game Over!")
     canvas.delete("all")
+
+snake()
