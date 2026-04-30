@@ -25,9 +25,6 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Pfeiltaste →  nach rechts bewegen
 
 ## Geplant
-- Essen (Food-System)
-- Wachstum der Schlange
-- Kollision mit Wänden und sich selbst
 - Level / steigende Geschwindigkeit
 - Highscore-System
 - Verschiedene Maps/Hindernisse 
