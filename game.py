@@ -62,7 +62,7 @@ def snake():
     spawn_food()
     root.mainloop()
 
-def grow_snake(event):
+def grow_snake():
     last = snake_part[-1]                       #-1 = letzes element der liste
 
     coords = canvas.coords(last)
@@ -70,7 +70,6 @@ def grow_snake(event):
 
     new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
     snake_part.append(new_part)
-
 
 def spawn_food():
     global food
@@ -80,11 +79,9 @@ def spawn_food():
 
     food = canvas.create_oval(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
-
-
 #bewegung aktualisierung
 def move_snake():
-    global x, y, direction, canvas, snake_part,moved
+    global x, y, direction, canvas, snake_part, moved, food
 
     if direction is not None:
         moved = True
@@ -117,6 +114,12 @@ def move_snake():
         px1, py1, px2, py2 = old_positions[i - 1]
         canvas.coords(snake_part[i],px1, py1,px1 + 20, py1 + 20)              #coords =ändere die Position
 
+    if food_collision():
+        canvas.delete(food)
+        food = None                                                 #reset food, sonst coords() error (da canvas.delete nur objekt löscht nicht die Variable auf None setzt
+        grow_snake()
+        spawn_food()
+
     if collision():
         game_over()
         return
@@ -135,6 +138,18 @@ def collision():
             return True
 
     return False
+
+# vergleicht ob kopf und essen auf gleicher position sind
+def food_collision():
+    global food
+
+    if food is None :
+        return False
+
+    head_coords = canvas.coords(snake_part[0])
+
+    return canvas.coords(food) == head_coords
+
 
 def game_over():
     global canvas
