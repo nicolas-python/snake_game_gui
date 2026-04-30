@@ -74,10 +74,10 @@ def grow_snake():
 def spawn_food():
     global food
 
-    food_x = random.randint(1,20)
-    food_y = random.randint(1,20)
+    food_x = random.randint(1,19) * 20
+    food_y = random.randint(1,19) * 20
 
-    food = canvas.create_oval(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
+    food = canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
 #bewegung aktualisierung
 def move_snake():
