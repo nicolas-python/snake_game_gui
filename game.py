@@ -9,6 +9,7 @@ canvas = None
 snake_part = None
 moved = False
 food = None
+score = 0
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -63,6 +64,10 @@ def snake():
     root.mainloop()
 
 def grow_snake():
+    global snake_part,score
+
+    score += 1
+    print(score)
     last = snake_part[-1]                       #-1 = letzes element der liste
 
     coords = canvas.coords(last)
