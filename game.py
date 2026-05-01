@@ -132,12 +132,17 @@ def collision():
         return False
 
     head_coords = canvas.coords(snake_part[0])
+    x1, y1, x2, y2 = head_coords
+
+    if x1 < 0 or x1 >= 400 or y1 < 0 or y1 >= 400:
+        return True
 
     for part in snake_part[1:]:
         if canvas.coords(part) == head_coords:
             return True
 
     return False
+
 
 # vergleicht ob kopf und essen auf gleicher position sind
 def food_collision():
