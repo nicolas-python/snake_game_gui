@@ -6,6 +6,7 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Spieler erstellen und speichern
 - Spieler auswählen und löschen
 - Score anzeigen
+- Timer
 - Spielfeld mit Canvas
 - Steuerung der Schlange mit Pfeiltasten
 - Grundlegende Bewegung der Schlange
