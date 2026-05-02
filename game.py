@@ -11,6 +11,7 @@ moved = False
 food = None
 score = 0
 score_label = None
+game_timer = 0
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -31,13 +32,14 @@ def go_down(event):
 
 
 def snake():
-    global canvas, snake_part,x , y, score_label
+    global canvas, snake_part,x , y, score_label, game_timer
     root = tk.Tk()
     root.title("Snake Game")
     root.geometry("400x400")
 
-    score_label = tk.Label(root, text="Score: 0", fg="black", bg="white")
+    score_label = tk.Label(root, text="Score: 0 - Zeit: 0", fg="black", bg="white")
     score_label.pack()
+
 
     #Canvas = Zeichenfläche in Tkinter
     #Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
@@ -63,15 +65,25 @@ def snake():
     root.bind("<Up>", go_up)
     root.bind("<Down>", go_down)
 
+
     move_snake()
+    update_timer()
     spawn_food()
     root.mainloop()
+
+def update_timer():
+    global game_timer,score_label
+
+    game_timer += 1
+    score_label.config(text=f"Score: {score} - Zeit: {game_timer}")
+
+    canvas.after(1000, update_timer)
 
 def grow_snake():
     global snake_part,score,score_label
 
     score += 1
-    score_label.config(text=f"Score: {score}")
+    score_label.config(text=f"Score: {score} - Zeit: {game_timer}")
     last = snake_part[-1]                       #-1 = letzes element der liste
 
     coords = canvas.coords(last)
