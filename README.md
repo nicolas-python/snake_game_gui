@@ -10,6 +10,7 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Spielfeld mit Canvas
 - Steuerung der Schlange mit Pfeiltasten
 - Grundlegende Bewegung der Schlange
+- Pausieren des Spiels 
 
 ## Installation 
 
@@ -24,12 +25,11 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Pfeiltaste ↓  nach unten bewegen
 - Pfeiltaste ←  nach links bewegen
 - Pfeiltaste →  nach rechts bewegen
+- P zum Pausieren drücken 
 
 ## Geplant
 - Level / steigende Geschwindigkeit
 - Highscore-System
 - Verschiedene Maps/Hindernisse 
-- Pause-Funktion
 - Zeitmodus (Timer) mit steigender Schwierigkeit
-- Dynamische Geschwindigkeit (Spiel wird schneller je nach Zeit oder Score)
 - Punktesystem mit Bonuspunkten im Zeitmodus
