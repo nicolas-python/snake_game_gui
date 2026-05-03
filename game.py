@@ -12,6 +12,7 @@ food = None
 score = 0
 score_label = None
 game_timer = 0
+speed = 200
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -72,10 +73,13 @@ def snake():
     root.mainloop()
 
 def update_timer():
-    global game_timer,score_label
+    global game_timer, score_label, speed
 
     game_timer += 1
     score_label.config(text=f"Score: {score} - Zeit: {game_timer}")
+
+    if game_timer % 10 == 0:    #% = Modulo → berechnet den Rest einer Division wen rest 0 -10 wen rest vorhanden geschwindigkeit gleich
+        speed -=10
 
     canvas.after(1000, update_timer)
 
@@ -146,7 +150,7 @@ def move_snake():
         return
 
     #aktualisierung
-    canvas.after(200, move_snake)
+    canvas.after(speed, move_snake)
 
 def collision():
     if not moved:
