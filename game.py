@@ -79,7 +79,11 @@ def snake():
     root.mainloop()
 
 def update_timer():
-    global game_timer, score_label, speed
+    global game_timer, score_label, speed , pause
+
+    if pause:
+        canvas.after(1000, update_timer)
+        return
 
     game_timer += 1
     score_label.config(text=f"Score: {score} - Zeit: {game_timer}")
