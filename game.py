@@ -93,7 +93,7 @@ def grow_snake():
     coords = canvas.coords(last)
     x1, y1, x2, y2 = coords
 
-    new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
+    new_part = canvas.create_rectangle(x1, y1, x2, y2, fill="dark green")
     snake_part.append(new_part)
 
 def spawn_food():
@@ -186,5 +186,3 @@ def game_over():
 
     mb.showinfo("Game Over","Game Over!")
     canvas.delete("all")
-
-snake()
