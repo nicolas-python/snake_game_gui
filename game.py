@@ -199,6 +199,11 @@ def game_over():
     global canvas
 
     mb.showinfo("Game Over","Game Over!")
-    canvas.delete("all")
+
+    if mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?"):
+        snake()
+
+    else:
+        canvas.delete("all")
 
 snake()
