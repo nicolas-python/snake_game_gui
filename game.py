@@ -26,6 +26,25 @@ class SnakeGame:
         self.setup_game()
 
     def setup_game(self):
+        self.score_label = tk.Label(self.root, text="Score: 0 - Zeit: 0", fg="black", bg="white")
+        self.score_label.pack()
+
+        # Canvas = Zeichenfläche in Tkinter
+        # Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
+        self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
+        self.canvas.pack()
+
+        # steuerung (pfeiltasten)
+        self.root.bind("<Left>", self.go_left)
+        self.root.bind("<Right>", self.go_right)
+        self.root.bind("<Up>", self.go_up)
+        self.root.bind("<Down>", self.go_down)
+
+        self.move_snake()
+        self.update_timer()
+        self.spawn_food()
+        self.root.mainloop()
+        sekf.root.mainloop()
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(self,event):
@@ -46,14 +65,6 @@ def pause_game(self,event):
 def snake(self):
     self.root.bind("<p>", self.pause_game)
 
-    self.score_label = tk.Label(self.root, text="Score: 0 - Zeit: 0", fg="black", bg="white")
-    self.score_label.pack()
-
-    #Canvas = Zeichenfläche in Tkinter
-    #Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
-    self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
-    self.canvas.pack()
-
     #start position
     body_x = 200
     body_y = 200
@@ -66,18 +77,6 @@ def snake(self):
     body = self.canvas.create_rectangle(body_x, body_y, body_x + 20, body_y + 20, fill="green")
     self.canvas.itemconfig(body, state="hidden")
     self.snake_part.append(body)
-
-    #steuerung (pfeiltasten)
-    self.root.bind("<Left>", self.go_left)
-    self.root.bind("<Right>", self.go_right)
-    self.root.bind("<Up>", self.go_up)
-    self.root.bind("<Down>", self.go_down)
-
-
-    self.move_snake()
-    self.update_timer()
-    self.spawn_food()
-    self.root.mainloop()
 
 def update_timer(self):
 
