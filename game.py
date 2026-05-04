@@ -13,7 +13,7 @@ class SnakeGame:
         self.x = 200
         self.y = 200
         self.canvas = None
-        self.snake_part = None
+        self.snake_part = []
         self.moved = False
         self.food = None
         self.score = 0
@@ -21,7 +21,6 @@ class SnakeGame:
         self.game_timer = 0
         self.speed = 200
         self.pause = False
-        self.root = None
 
         self.setup_game()
 
@@ -34,187 +33,192 @@ class SnakeGame:
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
         self.canvas.pack()
 
+        self.snake()
+        self.spawn_food()
+
         # steuerung (pfeiltasten)
         self.root.bind("<Left>", self.go_left)
         self.root.bind("<Right>", self.go_right)
         self.root.bind("<Up>", self.go_up)
         self.root.bind("<Down>", self.go_down)
 
-        self.move_snake()
+
         self.update_timer()
-        self.spawn_food()
+        self.move_snake()
+
         self.root.mainloop()
-        sekf.root.mainloop()
 
-#zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
-def go_left(self,event):
-    self.direction = "left"
+    #bedienung
+    #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
+    def go_left(self,event):
+        self.direction = "left"
 
-def go_right(self,event):
-    self.direction = "right"
+    def go_right(self,event):
+        self.direction = "right"
 
-def go_up(self,event):
-    self.direction = "up"
+    def go_up(self,event):
+        self.direction = "up"
 
-def go_down(self,event):
-    self.direction = "down"
+    def go_down(self,event):
+        self.direction = "down"
 
-def pause_game(self,event):
-    self.pause = not self.pause
-
-def snake(self):
-    self.root.bind("<p>", self.pause_game)
-
-    #start position
-    body_x = 200
-    body_y = 200
+    def pause_game(self,event):
+        self.pause = not self.pause
 
     #schlange model
-    self.snake_part = []
-    head = self.canvas.create_rectangle(body_x, body_y, body_x + 20, body_y+ 20, fill = "red")
-    self.snake_part.append(head)
+    def snake(self):
+        self.root.bind("<p>", self.pause_game)
+        #start position
+        body_x = 200
+        body_y = 200
 
-    body = self.canvas.create_rectangle(body_x, body_y, body_x + 20, body_y + 20, fill="green")
-    self.canvas.itemconfig(body, state="hidden")
-    self.snake_part.append(body)
+        self.snake_part = []
+        head = self.canvas.create_rectangle(body_x, body_y, body_x + 20, body_y+ 20, fill = "red")
+        self.snake_part.append(head)
 
-def update_timer(self):
+        body = self.canvas.create_rectangle(body_x, body_y, body_x + 20, body_y + 20, fill="green")
+        self.canvas.itemconfig(body, state="hidden")
+        self.snake_part.append(body)
 
-    if self.pause:
+    #Zeit
+    def update_timer(self):
+
+        if self.pause:
+            self.canvas.after(1000, self.update_timer)
+            return
+
+        self.game_timer += 1
+        self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
+
+        if self.game_timer % 10 == 0:    #% = Modulo → berechnet den Rest einer Division wen rest 0 -10 wen rest vorhanden geschwindigkeit gleich
+            self.speed -=10
+
         self.canvas.after(1000, self.update_timer)
-        return
 
-    self.game_timer += 1
-    self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
+    #essen
+    def spawn_food(self):
 
-    if self.game_timer % 10 == 0:    #% = Modulo → berechnet den Rest einer Division wen rest 0 -10 wen rest vorhanden geschwindigkeit gleich
-        self.speed -=10
+        food_x = random.randint(0, 19) * 20
+        food_y = random.randint(0, 19) * 20
 
-    self.canvas.after(1000, self.update_timer)
+        self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
-def grow_snake(self):
+    #bewegung aktualisierung
 
-    self.score += 1
-    self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
-    last = self.snake_part[-1]                       #-1 = letzes element der liste
+    def move_snake(self):
+        if self.pause:
+            self.canvas.after(200, self.move_snake)
+            return
 
-    coords = self.canvas.coords(last)
-    x1, y1, x2, y2 = coords
+        if self.direction is not None:
+            self.moved = True
 
-    new_part = self.canvas.create_rectangle(x1, y1, x2, y2, fill="dark green")
-    self.snake_part.append(new_part)
+        # Körper sichtbar machen beim ersten Move
+        if self.canvas.itemcget(self.snake_part[1], "state") == "hidden" and self.direction is not None:
+            self.canvas.itemconfig(self.snake_part[1], state="normal")
 
-def spawn_food(self):
+        step = 20
 
-    food_x = random.randint(0,19) * 20
-    food_y = random.randint(0,19) * 20
+        # alte Position speichern
+        old_positions = []
+        for part in self.snake_part:
+            old_positions.append(self.canvas.coords(part))
 
-    self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
+        if self.direction == "left":
+            self.x -= step
+        elif self.direction == "right":
+            self.x += step
+        elif self.direction == "up":
+            self.y -= step
+        elif self.direction == "down":
+            self.y += step
 
-#bewegung aktualisierung
-def move_snake(self):
+        # kopf bewegen
+        self.canvas.coords(self.snake_part[0], self.x, self.y, self.x + 20, self.y + 20)  # bewegung von kopf aus
 
-    if self.pause:
-        self.canvas.after(200, move_snake)
-        return
+        # körper nachziehen
+        for i in range(1, len(self.snake_part)):
+            px1, py1, px2, py2 = old_positions[i - 1]
+            self.canvas.coords(self.snake_part[i], px1, py1, px1 + 20, py1 + 20)  # coords =ändere die Position
 
-    if self.direction is not None:
-        self.moved = True
+        if self.food_collision():
+            self.canvas.delete(self.food)
+            self.food = None  # reset food, sonst coords() error (da canvas.delete nur objekt löscht nicht die Variable auf None setzt
+            self.grow_snake()
+            self.spawn_food()
 
-    # Körper sichtbar machen beim ersten Move
-    if self.canvas.itemcget(self.snake_part[1], "state") == "hidden" and self.direction is not None:
-        self.canvas.itemconfig(self.snake_part[1], state="normal")
+        if self.collision():
+            self.game_over()
+            return
 
-    step = 20
+        # aktualisierung
+        self.canvas.after(self.speed, self.move_snake)
 
-    # alte Position speichern
-    old_positions = []
-    for part in self.snake_part:
-        old_positions.append(self.canvas.coords(part))
+    #Kollision
+    def collision(self):
 
-    if self.direction == "left":
-        self.x -= step
-    elif self.direction == "right":
-        self.x += step
-    elif self.direction == "up":
-        self.y -= step
-    elif self.direction == "down":
-        self.y += step
+        if not self.moved:
+            return False
 
-    #kopf bewegen
-    self.canvas.coords(self.snake_part[0], self.x, self.y, self.x + 20, self.y + 20)  #bewegung von kopf aus
+        head_coords = self.canvas.coords(self.snake_part[0])
+        x1, y1, x2, y2 = head_coords
 
-    #körper nachziehen
-    for i in range(1, len(self.snake_part)):
-        px1, py1, px2, py2 = old_positions[i - 1]
-        self.canvas.coords(self.snake_part[i],px1, py1,px1 + 20, py1 + 20)              #coords =ändere die Position
-
-    if self.food_collision():
-        self.canvas.delete(self.food)
-        self.food = None                                                 #reset food, sonst coords() error (da canvas.delete nur objekt löscht nicht die Variable auf None setzt
-        self.grow_snake()
-        self.spawn_food()
-
-    if self.collision():
-        self.game_over()
-        return
-
-    #aktualisierung
-    self.canvas.after(self.speed, self.move_snake)
-
-def collision(self):
-    if not self.moved:
-        return False
-
-    head_coords = self.canvas.coords(self.snake_part[0])
-    x1, y1, x2, y2 = head_coords
-
-    if x1 < 0 or x1 >= 380 or y1 < 0 or y1 >= 380:    #400-20=380 Snake ist 20px groß, letzter gültiger Startpunkt ist 380 sonst wäre der Kopf schon teilweise außerhalb, bevor die Kollision greift
-        return True
-
-    for part in self.snake_part[1:]:
-        if self.canvas.coords(part) == head_coords:
+        if x1 < 0 or x1 >= 380 or y1 < 0 or y1 >= 380:  # 400-20=380 Snake ist 20px groß, letzter gültiger Startpunkt ist 380 sonst wäre der Kopf schon teilweise außerhalb, bevor die Kollision greift
             return True
 
-    return False
+        for part in self.snake_part[1:]:
+            if self.canvas.coords(part) == head_coords:
+                return True
 
-
-# vergleicht ob kopf und essen auf gleicher position sind
-def food_collision(self):
-
-    if self.food is None :
         return False
 
-    head_coords = self.canvas.coords(self.snake_part[0])
+    # vergleicht ob kopf und essen auf gleicher position sind
+    def food_collision(self):
+        if self.food is None :
+            return False
 
-    return self.canvas.coords(self.food) == head_coords
+        head_coords = self.canvas.coords(self.snake_part[0])
+        return self.canvas.coords(self.food) == head_coords
 
+    def grow_snake(self):
+        self.score += 1
+        self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
+        last = self.snake_part[-1]  # -1 = letzes element der liste
 
-def game_over(self):
+        coords = self.canvas.coords(last)
+        x1, y1, x2, y2 = coords
 
-    mb.showinfo("Game Over","Game Over!")
+        new_part = self.canvas.create_rectangle(x1, y1, x2, y2, fill="dark green")
+        self.snake_part.append(new_part)
 
-    answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
+    #game over
+    def game_over(self):
 
-    if answer == True:
-        self.reset_game()
-        self.move_snake()
-        self.update_timer()
-        self.spawn_food()
+        mb.showinfo("Game Over","Game Over!")
 
-    else:
+        answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
+
+        if answer == True:
+            self.reset_game()
+            self.move_snake()
+            self.update_timer()
+            self.spawn_food()
+
+        else:
+            self.canvas.delete("all")
+            self.root.destroy()
+
+    def reset_game(self):
         self.canvas.delete("all")
-        self.root.destroy()
 
-def reset_game(self):
-    self.canvas.delete("all")
-
-    self.x = 200
-    self.y = 200
-    self.score = 0
-    self.game_timer = 0
-    self.direction = None
-    self.food = None
-    self.snake_part = []
+        self.x = 200
+        self.y = 200
+        self.score = 0
+        self.game_timer = 0
+        self.direction = None
+        self.food = None
+        self.snake_part = []
 
 game = SnakeGame()
+
+
