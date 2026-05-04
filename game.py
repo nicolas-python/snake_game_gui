@@ -174,7 +174,7 @@ def collision():
     head_coords = canvas.coords(snake_part[0])
     x1, y1, x2, y2 = head_coords
 
-    if x1 < 0 or x1 >= 400 or y1 < 0 or y1 >= 400:
+    if x1 < 0 or x1 >= 380 or y1 < 0 or y1 >= 380:    #400-20=380 Snake ist 20px groß, letzter gültiger Startpunkt ist 380 sonst wäre der Kopf schon teilweise außerhalb, bevor die Kollision greift
         return True
 
     for part in snake_part[1:]:
