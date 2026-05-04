@@ -2,19 +2,28 @@ import tkinter as tk
 import tkinter.messagebox as mb
 import random
 
-direction = None
-x = 200
-y = 200
-canvas = None
-snake_part = None
-moved = False
-food = None
-score = 0
-score_label = None
-game_timer = 0
-speed = 200
-pause = False
-root = None
+
+class SnakeGame:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Snake Game")
+        self.root.geometry("400x400")
+
+        self.direction = None
+        self.x = 200
+        self.y = 200
+        self.canvas = None
+        self.snake_part = None
+        self.moved = False
+        self.food = None
+        self.score = 0
+        self.score_label = None
+        self.game_timer = 0
+        self.speed = 200
+        self.pause = False
+        self.root = None
+
+        self.setup_game()
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -40,14 +49,10 @@ def pause_game(event):
 
 def snake():
     global canvas, snake_part,x , y, score_label, game_timer, root
-    root = tk.Tk()
-    root.title("Snake Game")
-    root.geometry("400x400")
     root.bind("<p>", pause_game)
 
     score_label = tk.Label(root, text="Score: 0 - Zeit: 0", fg="black", bg="white")
     score_label.pack()
-
 
     #Canvas = Zeichenfläche in Tkinter
     #Canvas = Spielfeld zum Zeichnen von Objekten (Snake, Food, etc.)
@@ -205,6 +210,9 @@ def game_over():
 
     if answer == True:
         reset_game()
+        move_snake()
+        update_timer()
+        spawn_food()
 
     else:
         canvas.delete("all")
@@ -222,7 +230,5 @@ def reset_game():
     direction = None
     food = None
     snake_part = []
-
-    snake()
 
 snake()
