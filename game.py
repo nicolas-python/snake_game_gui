@@ -14,6 +14,7 @@ score_label = None
 game_timer = 0
 speed = 200
 pause = False
+root = None
 
 #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
 def go_left(event):
@@ -38,7 +39,7 @@ def pause_game(event):
     pause = not pause
 
 def snake():
-    global canvas, snake_part,x , y, score_label, game_timer
+    global canvas, snake_part,x , y, score_label, game_timer, root
     root = tk.Tk()
     root.title("Snake Game")
     root.geometry("400x400")
@@ -196,14 +197,32 @@ def food_collision():
 
 
 def game_over():
-    global canvas
+    global canvas, root
 
     mb.showinfo("Game Over","Game Over!")
 
-    if mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?"):
-        snake()
+    answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
+
+    if answer == True:
+        reset_game()
 
     else:
         canvas.delete("all")
+        root.destroy()
+
+def reset_game():
+    global x, y, score, game_timer, direction, snake_part, food
+
+    canvas.delete("all")
+
+    x = 200
+    y = 200
+    score = 0
+    game_timer = 0
+    direction = None
+    food = None
+    snake_part = []
+
+    snake()
 
 snake()
