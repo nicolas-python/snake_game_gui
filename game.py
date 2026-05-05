@@ -25,6 +25,13 @@ class SnakeGame:
         self.setup_game()
 
     def setup_game(self):
+        self.creat_ui()
+        self.bind_keys()
+        self.start_game()
+        self.root.mainloop()
+
+    #Oberfläche
+    def creat_ui(self):
         self.score_label = tk.Label(self.root, text="Score: 0 - Zeit: 0", fg="black", bg="white")
         self.score_label.pack()
 
@@ -33,20 +40,20 @@ class SnakeGame:
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
         self.canvas.pack()
 
-        self.snake()
-        self.spawn_food()
-
-        # steuerung (pfeiltasten)
+    # steuerung
+    def bind_keys(self):
         self.root.bind("<Left>", self.go_left)
         self.root.bind("<Right>", self.go_right)
         self.root.bind("<Up>", self.go_up)
         self.root.bind("<Down>", self.go_down)
+        self.root.bind("<p>", self.pause_game)
 
-
+    #start game
+    def start_game(self):
+        self.snake()
+        self.spawn_food()
         self.update_timer()
         self.move_snake()
-
-        self.root.mainloop()
 
     #bedienung
     #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
@@ -220,5 +227,3 @@ class SnakeGame:
         self.snake_part = []
 
 game = SnakeGame()
-
-
