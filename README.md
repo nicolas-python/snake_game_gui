@@ -11,7 +11,7 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Steuerung der Schlange mit Pfeiltasten
 - Grundlegende Bewegung der Schlange
 - Pausieren des Spiels
-- 
+
 ## Installation 
 
 1. Python installieren
