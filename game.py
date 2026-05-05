@@ -21,6 +21,8 @@ class SnakeGame:
         self.game_timer = 0
         self.speed = 200
         self.pause = False
+        self.stop_move_snake = None
+        self.stop_timer = None
 
         self.setup_game()
 
@@ -89,7 +91,6 @@ class SnakeGame:
 
     #Zeit
     def update_timer(self):
-
         if self.pause:
             self.canvas.after(1000, self.update_timer)
             return
@@ -100,11 +101,10 @@ class SnakeGame:
         if self.game_timer % 10 == 0:    #% = Modulo → berechnet den Rest einer Division wen rest 0 -10 wen rest vorhanden geschwindigkeit gleich
             self.speed -=10
 
-        self.canvas.after(1000, self.update_timer)
+        self.stop_timer = self.canvas.after(1000, self.update_timer)
 
     #essen
     def spawn_food(self):
-
         food_x = random.randint(0, 19) * 20
         food_y = random.randint(0, 19) * 20
 
@@ -159,7 +159,16 @@ class SnakeGame:
             return
 
         # aktualisierung
-        self.canvas.after(self.speed, self.move_snake)
+        self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
+
+    def stop_all(self):
+        if self.stop_move_snake is not None:
+            self.canvas.after_cancel(self.stop_move_snake)
+            self.stop_move_snake = None
+
+        if self.stop_timer is not None:
+            self.canvas.after_cancel(self.stop_timer)
+            self.stop_timer = None
 
     #Kollision
     def collision(self):
@@ -204,12 +213,11 @@ class SnakeGame:
         mb.showinfo("Game Over","Game Over!")
 
         answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
+        self.stop_all()
 
         if answer == True:
             self.reset_game()
-            self.move_snake()
-            self.update_timer()
-            self.spawn_food()
+            self.start_game()
 
         else:
             self.canvas.delete("all")
