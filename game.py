@@ -109,11 +109,16 @@ class SnakeGame:
         food_x = random.randint(0, 19) * 20
         food_y = random.randint(0, 19) * 20
 
+        print("FOOD SPAWN:", food_x, food_y)
+        print("spawn_food() wurde aufgerufen")
+        print("FOOD:", self.food)
+
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
     #bewegung aktualisierung
 
     def move_snake(self):
+        print("speed:", self.speed)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -244,5 +249,7 @@ class SnakeGame:
         self.food = None
         self.snake_part = []
         self.moved = False
+        self.speed = 200
+
 
 game = SnakeGame()
