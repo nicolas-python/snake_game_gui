@@ -33,3 +33,4 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Verschiedene Maps/Hindernisse 
 - Zeitmodus (Timer) mit steigender Schwierigkeit
 - Punktesystem mit Bonuspunkten im Zeitmodus
+- Snake färbt sich je länger sie wird
