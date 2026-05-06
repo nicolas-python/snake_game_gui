@@ -210,7 +210,7 @@ class SnakeGame:
     #game over
     def game_over(self):
 
-        mb.showinfo("Game Over","Game Over!")
+        self.canvas.create_text(200, 100, text="Game Over", fill="white", font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
 
         answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
         self.stop_all()
