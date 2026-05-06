@@ -233,5 +233,6 @@ class SnakeGame:
         self.direction = None
         self.food = None
         self.snake_part = []
+        self.moved = False
 
 game = SnakeGame()
