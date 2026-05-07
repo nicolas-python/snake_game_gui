@@ -106,8 +106,8 @@ class SnakeGame:
 
     #essen
     def spawn_food(self):
-        food_x = random.randint(0, 19) * 20
-        food_y = random.randint(0, 19) * 20
+        food_x = random.randint(0, 18) * 20
+        food_y = random.randint(0, 18) * 20
 
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
