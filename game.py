@@ -111,11 +111,11 @@ class SnakeGame:
 
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
-        print("SPAWN FOOD ID:", self.food)          #erkennen Food existiert wirklich?
-        print("SPAWN FOOD COORDS:", self.canvas.coords(self.food))      #erkennen Wo liegt es genau?
-        print("SNAKE HEAD:", self.canvas.coords(self.snake_part[0]))    #erkennen Spawnt es auf der Snake?
-    #bewegung aktualisierung
+        print("SPAWN CALLED")  # zeigt: Funktion wurde wirklich ausgeführt
+        print("FOOD RESPAWNED:", self.canvas.coords(self.food))  # zeigt Position vom Food
+        print("NEW FOOD ID:", self.food)  # zeigt Canvas-ID vom Food
 
+    #bewegung aktualisierung
     def move_snake(self):
         if self.pause:
             self.canvas.after(200, self.move_snake)
@@ -176,7 +176,6 @@ class SnakeGame:
 
     #Kollision
     def collision(self):
-
         if not self.moved:
             return False
 
@@ -199,6 +198,7 @@ class SnakeGame:
 
         head_coords = self.canvas.coords(self.snake_part[0])
         return self.canvas.coords(self.food) == head_coords
+
 
     def grow_snake(self):
         self.score += 1
