@@ -109,16 +109,11 @@ class SnakeGame:
         food_x = random.randint(0, 19) * 20
         food_y = random.randint(0, 19) * 20
 
-        print("FOOD SPAWN:", food_x, food_y)
-        print("spawn_food() wurde aufgerufen")
-        print("FOOD:", self.food)
-
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
     #bewegung aktualisierung
 
     def move_snake(self):
-        print("speed:", self.speed)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -154,6 +149,7 @@ class SnakeGame:
             px1, py1, px2, py2 = old_positions[i - 1]
             self.canvas.coords(self.snake_part[i], px1, py1, px1 + 20, py1 + 20)  # coords =ändere die Position
 
+        print("MOVE LOOP food:", self.food)
         if self.food_collision():
             self.canvas.delete(self.food)
             self.food = None  # reset food, sonst coords() error (da canvas.delete nur objekt löscht nicht die Variable auf None setzt
@@ -196,6 +192,7 @@ class SnakeGame:
 
     # vergleicht ob kopf und essen auf gleicher position sind
     def food_collision(self):
+        print("food_collision check:", self.food)
         if self.food is None :
             return False
 
@@ -220,8 +217,9 @@ class SnakeGame:
 
         self.animate_text()
 
-        answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
         self.stop_all()
+
+        answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
 
         if answer == True:
             self.reset_game()
@@ -246,6 +244,7 @@ class SnakeGame:
         self.score = 0
         self.game_timer = 0
         self.direction = None
+        print("RESET = food before:", self.food)
         self.food = None
         self.snake_part = []
         self.moved = False
