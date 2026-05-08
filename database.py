@@ -15,6 +15,17 @@ def init_db():
     conn.commit()
     conn.close()
 
+def get_players():
+    conn = sqlite3.connect("snake.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT name FROM players")
+    players = cursor.fetchall()
+
+    conn.close()
+
+    return players
+
 def save_player(name):
     conn = sqlite3.connect("snake.db")
     cursor = conn.cursor()
@@ -24,6 +35,28 @@ def save_player(name):
         (name, 0)
     )
 
+    conn.commit()
+    conn.close()
+
+def delete_player(name):
+    conn = sqlite3.connect("snake.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM players WHERE name = ?", (name,))
+
+    conn.commit()
+    conn.close()
+
+def get_scores():
+    conn = sqlite3.connect("snake.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT name, score FROM players ORDER BY score DESC")
+    scores = cursor.fetchall()
+
+    conn.close()
+    return scores
+
 def save_score(name,score):
     conn = sqlite3.connect("snake.db")
     cursor = conn.cursor()
@@ -32,3 +65,4 @@ def save_score(name,score):
 
     conn.commit()
     conn.close()
+
