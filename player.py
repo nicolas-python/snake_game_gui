@@ -1,5 +1,6 @@
 import tkinter as tk
-import sqlite3
+from database import get_players
+
 
 def create_player(frame):
     label = tk.Label(frame,text="Spielername:")
@@ -17,16 +18,11 @@ def select_player(frame):
 
     listbox = tk.Listbox(frame)
     listbox.pack(pady=10)
-    #erst datenbank öffnen
-    conn = sqlite3.connect("snake.db")
-    c= conn.cursor()
-    #dan daten holen
-    c.execute("SELECT name FROM players")
-    players = c.fetchall()
-    #dan in liste eintragen
+
+    players = get_players()
+
+    #in liste eintragen
     for p in players:
         listbox.insert(tk.END, p[0])
-
-    conn.close()
 
     return listbox
