@@ -1,13 +1,15 @@
 #snake
-
 import tkinter as tk
-import sqlite3
 import tkinter.messagebox as mb
 
-from player import create_player as cp
+from database import get_players
+from database import delete_player
+from database import save_player
+from database import save_score
+from database import get_scores
+from player import create_player as cp, create_player
 from player import select_player as sp
 from database import init_db
-from database import save_player
 from game import snake
 
 class snake_game:
@@ -63,25 +65,22 @@ class snake_game:
     def create_player_save(self):
         name = self.entry.get()
         save_player(name)
+        mb.showinfo("Spieler Erstellt", name)
 
         self.reload_players()
 
     def reload_players(self):
         self.listbox.delete(0, tk.END)
-        conn = sqlite3.connect("snake.db")
-        c = conn.cursor()
 
-        c.execute("SELECT name FROM players")
-        players = c.fetchall()
+        players = get_players()
 
         for p in players:
             self.listbox.insert(tk.END, p[0])
 
-        conn.close()
-
     def show_create_player(self):
         self.frame_buttons.pack_forget()
         self.frame_create_player.pack(expand=True, fill="both")
+
     #zurück creatplayer auswahl
     def show_menu(self):
         self.frame_create_player.pack_forget()
@@ -94,6 +93,7 @@ class snake_game:
     def select_player_save(self):
         selected = self.listbox.get(self.listbox.curselection())
         mb.showinfo("Gewählt",selected)
+
     #zurück player auswahl
     def show_menu_1(self):
         self.frame_select_player.pack_forget()
@@ -106,21 +106,18 @@ class snake_game:
             mb.showwarning("Fehler", "Bitte Spieler auswählen")
             return
 
-        conn = sqlite3.connect("snake.db")
-        c = conn.cursor()
-
-        c.execute("DELETE FROM players WHERE name = ?", (selected,))
-        conn.commit()
-        conn.close()
-
+        delete_player(selected)
         self.reload_players()
 
     def play(self):
-        snake()
+        selection = self.listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
 
-    def score(self):
-        self.frame_button.pack_forget()
-        self.score()
+        if not selection:
+            mb.showwarning("Fehler","Bitte Spieler Wählen")
+            return
+
+        selected = self.listbox.get(selection)                           #holt richtigen werd also "name"
+        snake(selected)
 
     def score(self):
         self.frame_buttons.pack_forget()
@@ -133,16 +130,10 @@ class snake_game:
         self.listbox = tk.Listbox(self.frame_score, width=25)
         self.listbox.pack(pady=10)
 
-        conn = sqlite3.connect("snake.db")
-        c = conn.cursor()
-
-        c.execute("SELECT name, score FROM players")
-        scores = c.fetchall()
+        scores = get_scores()
 
         for s in scores:
             self.listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte")
-
-        conn.close()
 
         button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2)
         button_back.pack(pady=10)
