@@ -91,8 +91,14 @@ class snake_game:
         self.frame_select_player.pack(expand=True, fill="both")
 
     def select_player_save(self):
-        selected = self.listbox.get(self.listbox.curselection())
-        mb.showinfo("Gewählt",selected)
+        selection =self.listbox.curselection()
+
+        if not selection:
+            mb.showwarning("Fehler","Bitte Spieler auswählen")
+            return
+
+        selected =self.listbox.get(selection[0])
+        mb.showinfo("Gewählt", f"Du hast den Spieler {selected} gewählt")
 
     #zurück player auswahl
     def show_menu_1(self):
