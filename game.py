@@ -1,10 +1,11 @@
 import tkinter as tk
 import tkinter.messagebox as mb
 import random
+from database import save_score
 
 
-class SnakeGame:
-    def __init__(self):
+class snake:
+    def __init__(self,player_name):
         self.root = tk.Tk()
         self.root.title("Snake Game")
         self.root.geometry("400x400")
@@ -24,6 +25,7 @@ class SnakeGame:
         self.stop_move_snake = None
         self.stop_timer = None
         self.colors = ["red", "green", "yellow", "blue", "white", "orange", "purple", "brown", "pink", "gold", "silver", "gray"]
+        self.player_name = player_name
 
         self.setup_game()
 
@@ -209,11 +211,10 @@ class SnakeGame:
 
     #game over
     def game_over(self):
+        save_score(self.player_name, self.score)
 
         self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
-
         self.animate_text()
-
         self.stop_all()
 
         answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
