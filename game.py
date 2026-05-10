@@ -26,6 +26,7 @@ class snake:
         self.stop_timer = None
         self.colors = ["red", "green", "yellow", "blue", "white", "orange", "purple", "brown", "pink", "gold", "silver", "gray"]
         self.player_name = player_name
+        self.running = True
 
         self.setup_game()
 
@@ -211,11 +212,12 @@ class snake:
 
     #game over
     def game_over(self):
+        self.running = False
+        self.stop_all()
         save_score(self.player_name, self.score, self.game_timer)
 
         self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
         self.animate_text()
-        self.stop_all()
 
         answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
 
@@ -228,6 +230,9 @@ class snake:
             self.root.destroy()
 
     def animate_text(self,i=0):
+        if not self.running:
+            return
+
         self.color = self.colors[i % len(self.colors)]
 
         self.canvas.itemconfig(self.game_over_text, fill=self.color)    #itemconfig = spätere änderung danach
@@ -246,3 +251,4 @@ class snake:
         self.snake_part = []
         self.moved = False
         self.speed = 200
+        self.running = True
