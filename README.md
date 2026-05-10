@@ -28,9 +28,9 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - P zum Pausieren drücken, erneut drücken zum Fortsetzen 
 
 ## Geplant
-- Level / steigende Geschwindigkeit
-- Highscore-System
-- Verschiedene Maps/Hindernisse 
-- Zeitmodus (Timer) mit steigender Schwierigkeit
-- Punktesystem mit Bonuspunkten im Zeitmodus
 - Snake färbt sich je länger sie wird
+- Hintergrund/Grid verbessern 
+- Startbildschirm verbessern
+- Level / steigende Geschwindigkeit
+- Level-System verbessern
+- Verschiedene Maps/Hindernisse 
