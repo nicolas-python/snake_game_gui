@@ -52,7 +52,7 @@ def get_scores():
     conn = sqlite3.connect("snake.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT name, score FROM players ORDER BY score DESC")
+    cursor.execute("SELECT name, score, time FROM players ORDER BY score DESC")
     scores = cursor.fetchall()
 
     conn.close()

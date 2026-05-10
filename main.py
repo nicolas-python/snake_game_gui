@@ -139,7 +139,7 @@ class snake_game:
         scores = get_scores()
 
         for s in scores:
-            self.listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte")
+            self.listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte - {s[2]} Sekunden")
 
         button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2)
         button_back.pack(pady=10)
