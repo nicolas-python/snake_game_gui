@@ -5,9 +5,8 @@ import tkinter.messagebox as mb
 from database import get_players
 from database import delete_player
 from database import save_player
-from database import save_score
 from database import get_scores
-from player import create_player as cp, create_player
+from player import create_player as cp
 from player import select_player as sp
 from database import init_db
 from game import snake
@@ -49,7 +48,7 @@ class snake_game:
 
         #select player
         self.frame_select_player = tk.Frame(self.root)
-        self.listbox = sp(self.frame_select_player)
+        self.player_listbox = sp(self.frame_select_player)
 
         self.save_button_select = tk.Button(self.frame_select_player, text="Auswählen", command=self.select_player_save)
         self.save_button_select.pack(pady=10)
@@ -70,12 +69,12 @@ class snake_game:
         self.reload_players()
 
     def reload_players(self):
-        self.listbox.delete(0, tk.END)
+        self.player_listbox.delete(0, tk.END)
 
         players = get_players()
 
         for p in players:
-            self.listbox.insert(tk.END, p[0])
+            self.player_listbox.insert(tk.END, p[0])
 
     def show_create_player(self):
         self.frame_buttons.pack_forget()
@@ -91,13 +90,13 @@ class snake_game:
         self.frame_select_player.pack(expand=True, fill="both")
 
     def select_player_save(self):
-        selection =self.listbox.curselection()
+        selection =self.player_listbox.curselection()
 
         if not selection:
             mb.showwarning("Fehler","Bitte Spieler auswählen")
             return
 
-        selected =self.listbox.get(selection[0])
+        selected =self.player_listbox.get(selection[0])
         mb.showinfo("Gewählt", f"Du hast den Spieler {selected} gewählt")
 
     #zurück player auswahl
@@ -106,7 +105,7 @@ class snake_game:
         self.frame_buttons.pack(expand=True)
 
     def delete_player(self):
-        selected = self.listbox.get(tk.ACTIVE)
+        selected = self.player_listbox.get(tk.ACTIVE)
 
         if not selected:
             mb.showwarning("Fehler", "Bitte Spieler auswählen")
@@ -116,19 +115,16 @@ class snake_game:
         self.reload_players()
 
     def play(self):
-        selection = self.listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
+        selection = self.player_listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
 
         if not selection:
-            selection = self.listbox.curselection()
-
-        print("DEBUG selection:", self.listbox.curselection())
-        print("DEBUG listbox items:", self.listbox.get(0, tk.END))
+            selection = self.player_listbox.curselection()
 
         if not selection:
             mb.showwarning("Fehler","Bitte Spieler Wählen")
             return
 
-        selected = self.listbox.get(selection[0])                           #holt richtigen werd also "name"
+        selected = self.player_listbox.get(selection[0])                           #holt richtigen werd also "name"
         snake(selected)
 
     def score(self):
@@ -139,13 +135,13 @@ class snake_game:
         label = tk.Label(self.frame_score, text="Score:")
         label.pack(pady=10)
 
-        self.listbox = tk.Listbox(self.frame_score, width=25)
-        self.listbox.pack(pady=10)
+        self.score_listbox = tk.Listbox(self.frame_score, width=25)
+        self.score_listbox.pack(pady=10)
 
         scores = get_scores()
 
         for s in scores:
-            self.listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte - {s[2]} Sekunden")
+            self.score_listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte - {s[2]} Sekunden")
 
         button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2)
         button_back.pack(pady=10)
