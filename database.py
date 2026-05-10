@@ -8,7 +8,8 @@ def init_db():
     CREATE TABLE IF NOT EXISTS players (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        score INTEGER DEFAULT 0
+        score INTEGER DEFAULT 0,
+        time INTEGER DEFAULT 0
     )
     """)
 
