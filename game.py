@@ -211,7 +211,7 @@ class snake:
 
     #game over
     def game_over(self):
-        save_score(self.player_name, self.score)
+        save_score(self.player_name, self.score, self.game_timer)
 
         self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
         self.animate_text()

@@ -58,11 +58,11 @@ def get_scores():
     conn.close()
     return scores
 
-def save_score(name,score):
+def save_score(name,score, time):
     conn = sqlite3.connect("snake.db")
     cursor = conn.cursor()
 
-    cursor.execute("UPDATE players SET score = ? WHERE name = ?",(score,name))
+    cursor.execute("UPDATE players SET score = ?, time = ? WHERE name = ?",(score, time, name))
 
     conn.commit()
     conn.close()
