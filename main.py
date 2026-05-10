@@ -119,10 +119,16 @@ class snake_game:
         selection = self.listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
 
         if not selection:
+            selection = self.listbox.curselection()
+
+        print("DEBUG selection:", self.listbox.curselection())
+        print("DEBUG listbox items:", self.listbox.get(0, tk.END))
+
+        if not selection:
             mb.showwarning("Fehler","Bitte Spieler Wählen")
             return
 
-        selected = self.listbox.get(selection)                           #holt richtigen werd also "name"
+        selected = self.listbox.get(selection[0])                           #holt richtigen werd also "name"
         snake(selected)
 
     def score(self):
