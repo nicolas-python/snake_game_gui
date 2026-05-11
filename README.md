@@ -28,7 +28,6 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - P zum Pausieren drücken, erneut drücken zum Fortsetzen 
 
 ## Geplant
-- Snake färbt sich je länger sie wird
 - Hintergrund/Grid verbessern 
 - Startbildschirm verbessern
 - Level / steigende Geschwindigkeit
