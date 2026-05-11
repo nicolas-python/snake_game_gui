@@ -6,11 +6,13 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Spieler erstellen und speichern
 - Spieler auswählen und löschen
 - Score anzeigen
-- Timer
+- Timer anzeigen
 - Spielfeld mit Canvas
 - Steuerung der Schlange mit Pfeiltasten
 - Grundlegende Bewegung der Schlange
 - Pausieren des Spiels
+- Geschwindigkeit steigt im Laufe des Spiels
+- Die Snake ändert beim Essen ihre Farbe
 
 ## Installation 
 
@@ -28,7 +30,6 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - P zum Pausieren drücken, erneut drücken zum Fortsetzen 
 
 ## Geplant
-- Snake färbt sich je länger sie wird
 - Hintergrund/Grid verbessern 
 - Startbildschirm verbessern
 - Level / steigende Geschwindigkeit
