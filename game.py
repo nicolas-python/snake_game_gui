@@ -207,13 +207,13 @@ class snake:
         coords = self.canvas.coords(last)
         x1, y1, x2, y2 = coords
 
+        new_part = self.canvas.create_rectangle(x1, y1, x2, y2, fill="dark green")
+        self.snake_part.append(new_part)
+
         color = random.choice(self.colors)
 
         for part in self.snake_part[1:]:
             self.canvas.itemconfig(part, fill=color)
-
-        new_part = self.canvas.create_rectangle(x1, y1, x2, y2, fill="dark green")
-        self.snake_part.append(new_part)
 
     #game over
     def game_over(self):
