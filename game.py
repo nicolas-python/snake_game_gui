@@ -235,9 +235,6 @@ class snake:
             self.root.destroy()
 
     def animate_text(self,i=0):
-        if not self.running:
-            return
-
         self.color = self.colors[i % len(self.colors)]
 
         self.canvas.itemconfig(self.game_over_text, fill=self.color)    #itemconfig = spätere änderung danach
