@@ -46,6 +46,12 @@ class snake:
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
         self.canvas.pack()
 
+        for x in range(0, 400, 20):
+            self.canvas.create_line(x, 0, x, 400, fill="gray20")
+
+        for y in range(0, 400, 20):
+            self.canvas.create_line(0, y, 400, y, fill="gray20")
+
     # steuerung
     def bind_keys(self):
         self.root.bind("<Left>", self.go_left)
