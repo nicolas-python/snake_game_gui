@@ -16,9 +16,10 @@ class snake_game:
         self.root = tk.Tk()
         self.root.title("Snake Game")
         self.root.geometry("400x400")
+        self.root.configure(bg="black")                     #configure= Widget-Eigenschaften ändern statt ersetzen
 
         #menü
-        self.frame_buttons = tk.Frame(self.root)
+        self.frame_buttons = tk.Frame(self.root,bg="black")
         self.frame_buttons.pack(expand=True)
 
         self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.show_create_player)
@@ -37,7 +38,7 @@ class snake_game:
         self.button_exit.pack(pady=10)
 
         #creat player
-        self.frame_create_player = tk.Frame(self.root)
+        self.frame_create_player = tk.Frame(self.root, bg="black")
         self.entry = cp(self.frame_create_player)
 
         self.back_button_create = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu)
@@ -47,7 +48,7 @@ class snake_game:
         self.save_button_create.pack(pady=10)
 
         #select player
-        self.frame_select_player = tk.Frame(self.root)
+        self.frame_select_player = tk.Frame(self.root, bg ="black")
         self.player_listbox = sp(self.frame_select_player)
 
         self.save_button_select = tk.Button(self.frame_select_player, text="Auswählen", command=self.select_player_save)
@@ -129,7 +130,7 @@ class snake_game:
 
     def score(self):
         self.frame_buttons.pack_forget()
-        self.frame_score = tk.Frame(self.root)
+        self.frame_score = tk.Frame(self.root, bg ="black")
         self.frame_score.pack(expand=True, fill="both")
 
         label = tk.Label(self.frame_score, text="Score:")
