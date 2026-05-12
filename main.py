@@ -24,7 +24,6 @@ class snake_game:
 
         self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.show_create_player, bg="cyan", activebackground="cyan" )
         self.button_create_player.pack(pady=10)
-        self.button_create_player.pack(pady=10)
 
         self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player, bg="cyan", activebackground="cyan")
         self.button_select_player.pack(pady=10)
@@ -42,23 +41,23 @@ class snake_game:
         self.frame_create_player = tk.Frame(self.root, bg="black")
         self.entry = cp(self.frame_create_player)
 
-        self.back_button_create = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu)
+        self.back_button_create = tk.Button(self.frame_create_player, text="Zurück", command=self.show_menu, bg="cyan", activebackground="cyan")
         self.back_button_create.pack(pady=10)
 
-        self.save_button_create = tk.Button(self.frame_create_player,text="Speichern",command=self.create_player_save)
+        self.save_button_create = tk.Button(self.frame_create_player,text="Speichern",command=self.create_player_save, bg="cyan", activebackground="green")
         self.save_button_create.pack(pady=10)
 
         #select player
         self.frame_select_player = tk.Frame(self.root, bg ="black")
         self.player_listbox = sp(self.frame_select_player)
 
-        self.save_button_select = tk.Button(self.frame_select_player, text="Auswählen", command=self.select_player_save)
+        self.save_button_select = tk.Button(self.frame_select_player, text="Auswählen", command=self.select_player_save, bg="cyan", activebackground="green")
         self.save_button_select.pack(pady=10)
 
-        self.clear_button_select = tk.Button(self.frame_select_player,text="Auswahl löschen",command=self.delete_player)
+        self.clear_button_select = tk.Button(self.frame_select_player,text="Auswahl löschen",command=self.delete_player, bg="cyan", activebackground="red")
         self.clear_button_select.pack(pady=10)
 
-        self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu_1)
+        self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu_1, bg="cyan", activebackground="cyan")
         self.back_button_select.pack(pady=10)
 
         self.root.mainloop()
@@ -134,10 +133,10 @@ class snake_game:
         self.frame_score = tk.Frame(self.root, bg ="black")
         self.frame_score.pack(expand=True, fill="both")
 
-        label = tk.Label(self.frame_score, text="Score:")
+        label = tk.Label(self.frame_score, text="Score:",bg="cyan")
         label.pack(pady=10)
 
-        self.score_listbox = tk.Listbox(self.frame_score, width=25)
+        self.score_listbox = tk.Listbox(self.frame_score, width=25, bg="grey")
         self.score_listbox.pack(pady=10)
 
         scores = get_scores()
@@ -145,7 +144,7 @@ class snake_game:
         for s in scores:
             self.score_listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte - {s[2]} Sekunden")
 
-        button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2)
+        button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2,bg="cyan", activebackground="cyan")
         button_back.pack(pady=10)
 
     #zurück score-menü
