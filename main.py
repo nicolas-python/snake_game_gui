@@ -22,19 +22,19 @@ class snake_game:
         self.frame_buttons = tk.Frame(self.root,bg="black")
         self.frame_buttons.pack(expand=True)
 
-        self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.show_create_player)
+        self.button_create_player = tk.Button(self.frame_buttons, text="Spieler erstellen",command=self.show_create_player, bg="cyan")
         self.button_create_player.pack(pady=10)
 
-        self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player)
+        self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player, bg="cyan")
         self.button_select_player.pack(pady=10)
 
-        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.play)
+        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.play, bg="lime green")
         self.button_play.pack(pady=10)
 
-        self.button_score = tk.Button(self.frame_buttons, text="Score anzeigen", command=self.score)
+        self.button_score = tk.Button(self.frame_buttons, text="Score anzeigen", command=self.score, bg="cyan")
         self.button_score.pack(pady=10)
 
-        self.button_exit = tk.Button(self.frame_buttons, text="Beenden", command=self.exit_game)
+        self.button_exit = tk.Button(self.frame_buttons, text="Beenden", command=self.exit_game, bg="cyan")
         self.button_exit.pack(pady=10)
 
         #creat player
