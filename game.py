@@ -30,11 +30,20 @@ class snake:
         self.colors = ["red", "green", "yellow", "blue", "white", "orange", "purple", "brown", "pink", "gold", "silver", "gray"]
         self.player_name = player_name
         self.running = True
+        self.score_multiplier = 1
 
         self.setup_game()
 
     def setup_game(self):
         self.speed = get_speed(self.difficulty)
+
+        if self.difficulty == "easy":
+            self.score_multiplier = 0.5
+        elif self.difficulty == "normal":
+            self.score_multiplier = 1
+        elif self.difficulty == "hard":
+            self.score_multiplier = 1.75
+
         self.creat_ui()
         self.bind_keys()
         self.start_game()
@@ -212,7 +221,7 @@ class snake:
 
 
     def grow_snake(self):
-        self.score += 1
+        self.score += self.score_multiplier
         self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
         last = self.snake_part[-1]  # -1 = letzes element der liste
 
