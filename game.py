@@ -137,6 +137,7 @@ class snake:
 
     #bewegung aktualisierung
     def move_snake(self):
+        print("Speed aktuell:", self.speed)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -273,5 +274,4 @@ class snake:
         self.food = None
         self.snake_part = []
         self.moved = False
-        self.speed = 200
         self.running = True
