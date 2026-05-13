@@ -1,11 +1,14 @@
 import tkinter as tk
 import tkinter.messagebox as mb
 import random
+
 from database import save_score
+from difficulty import get_speed
 
 
 class snake:
-    def __init__(self,player_name):
+    def __init__(self,player_name, difficulty):
+        self.difficulty = difficulty
         self.root = tk.Tk()
         self.root.title("Snake Game")
         self.root.geometry("400x400")
@@ -31,6 +34,7 @@ class snake:
         self.setup_game()
 
     def setup_game(self):
+        self.speed = get_speed(self.difficulty)
         self.creat_ui()
         self.bind_keys()
         self.start_game()
@@ -122,6 +126,8 @@ class snake:
 
     #bewegung aktualisierung
     def move_snake(self):
+        print("Geschwindigkeit:", self.speed)
+
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return

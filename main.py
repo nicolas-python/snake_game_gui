@@ -28,7 +28,7 @@ class snake_game:
         self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player, bg="cyan", activebackground="cyan")
         self.button_select_player.pack(pady=10)
 
-        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.play, bg="lime green", activebackground="lime green")
+        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.show_difficulty, bg="lime green", activebackground="lime green")
         self.button_play.pack(pady=10)
 
         self.button_score = tk.Button(self.frame_buttons, text="Score anzeigen", command=self.score, bg="cyan", activebackground="cyan")
@@ -60,7 +60,19 @@ class snake_game:
         self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu_1, bg="cyan", activebackground="cyan")
         self.back_button_select.pack(pady=10)
 
+        #select difficulty
+        self.difficulty = "normal"
+        self.frame_difficulty = tk.Frame(self.root, bg="black")
+
+        tk.Button(self.frame_difficulty,text="Easy",command=lambda: self.play("easy"), bg="cyan", activebackground="cyan").pack(pady=10)
+        tk.Button(self.frame_difficulty, text="Normal", command=lambda: self.play("normal"), bg="cyan",activebackground="cyan").pack(pady=10)
+        tk.Button(self.frame_difficulty, text="Hard", command=lambda: self.play("hard"), bg="cyan",activebackground="cyan").pack(pady=10)
+
         self.root.mainloop()
+
+    def show_difficulty(self):
+        self.frame_buttons.pack_forget()
+        self.frame_difficulty.pack(expand=True, fill="both")
 
     def create_player_save(self):
         name = self.entry.get()
@@ -115,18 +127,16 @@ class snake_game:
         delete_player(selected)
         self.reload_players()
 
-    def play(self):
+    def play(self, difficulty):
+        self.difficulty = difficulty
         selection = self.player_listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
-
-        if not selection:
-            selection = self.player_listbox.curselection()
 
         if not selection:
             mb.showwarning("Fehler","Bitte Spieler Wählen")
             return
 
         selected = self.player_listbox.get(selection[0])                           #holt richtigen werd also "name"
-        snake(selected)
+        snake(selected, self.difficulty)
 
     def score(self):
         self.frame_buttons.pack_forget()
