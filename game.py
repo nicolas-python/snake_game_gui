@@ -4,6 +4,8 @@ import random
 
 from database import save_score
 from difficulty import get_speed
+from PIL import Image, ImageTk     # für canvas hintergrundebilder import
+
 
 
 class snake:
@@ -60,12 +62,19 @@ class snake:
         self.canvas.pack()
 
         if self.difficulty == "easy":
+            bg_path = "backgrounds/easy_gras.png"
+        elif self.difficulty == "normal":
+            bg_path = "backgrounds/normal_gras.png"
+        #elif self.difficulty == "hard":
+        #    bg_path = "backgrounds/hard_cell.png"
+        else:
+            bg_path = "backgrounds/normal_gras.png"
 
-            for x in range(0, 400, 20):
-                self.canvas.create_line(x, 0, x, 400, fill="gray20")
+        self.bg_image = Image.open(bg_path)
+        self.bg_image = self.bg_image.resize((400, 400))
+        self.bg_photo = ImageTk.PhotoImage(self.bg_image)
 
-            for y in range(0, 400, 20):
-                self.canvas.create_line(0, y, 400, y, fill="gray20")
+        self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
 
     # steuerung
     def bind_keys(self):
