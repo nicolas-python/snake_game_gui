@@ -62,7 +62,10 @@ class snake:
         self.canvas.pack()
 
         if self.difficulty == "easy":
-            bg_path = "backgrounds/easy_gras.png"
+            bg_path = random.choice([
+                "backgrounds/easy_gras.png",
+                "backgrounds/easy_gras_2.png"])
+
         elif self.difficulty == "normal":
             bg_path = "backgrounds/normal_gras.png"
         elif self.difficulty == "hard":
