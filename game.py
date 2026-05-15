@@ -11,7 +11,7 @@ from PIL import Image, ImageTk     # für canvas hintergrundebilder import
 class snake:
     def __init__(self,player_name, difficulty):
         self.difficulty = difficulty
-        self.root = tk.tk.Toplevel()    #toplevel= neues Fenster im selben Programm
+        self.root = tk.Toplevel()    #toplevel= neues Fenster im selben Programm
         self.root.title("Snake Game")
         self.root.geometry("400x400")
 
@@ -65,8 +65,8 @@ class snake:
             bg_path = "backgrounds/easy_gras.png"
         elif self.difficulty == "normal":
             bg_path = "backgrounds/normal_gras.png"
-        #elif self.difficulty == "hard":
-        #    bg_path = "backgrounds/hard_cell.png"
+        elif self.difficulty == "hard":
+            bg_path = "backgrounds/hard_lava.png"
         else:
             bg_path = "backgrounds/normal_gras.png"
 
