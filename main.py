@@ -79,7 +79,14 @@ class snake_game:
         tk.Button(self.frame_difficulty, text="Normal", command=lambda: self.play("normal"), bg="cyan",activebackground="cyan").pack(pady=10)
         tk.Button(self.frame_difficulty, text="Hard", command=lambda: self.play("hard"), bg="cyan",activebackground="cyan").pack(pady=10)
 
+        self.button_back_difficulty = tk.Button(self.frame_difficulty,text="Zurück",command=self.show_menu_3, bg="cyan",activebackground="cyan")
+        self.button_back_difficulty.pack(pady=10)
+
         self.root.mainloop()
+
+    def show_menu_3(self):
+        self.frame_difficulty.pack_forget()
+        self.frame_buttons.pack(expand=True)
 
     def show_difficulty(self):
         self.frame_buttons.pack_forget()
