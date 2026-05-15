@@ -3,7 +3,7 @@ from database import get_players
 
 
 def create_player(frame):
-    label = tk.Label(frame,text="Spielername:",bg="cyan")
+    label = tk.Label(frame,text="Spielername:",bg="#93c433")
     label.pack(pady=(20, 5))
 
     entry = tk.Entry(frame, bg="grey", fg="black")
@@ -13,7 +13,7 @@ def create_player(frame):
 
 def select_player(frame):
 
-    label = tk.Label(frame, text="Spielername auswählen:", bg="cyan")
+    label = tk.Label(frame, text="Spielername auswählen:", bg="#93c433")
     label.pack(pady=10)
 
     listbox = tk.Listbox(frame, bg="grey", fg="black")
