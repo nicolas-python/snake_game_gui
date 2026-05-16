@@ -39,7 +39,7 @@ class snake_game:
         self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player, bg="cyan", activebackground="cyan")
         self.button_select_player.pack(pady=10)
 
-        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.show_difficulty, bg="lime green", activebackground="lime green")
+        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.show_menu, bg="lime green", activebackground="lime green")
         self.button_play.pack(pady=10)
 
         self.button_score = tk.Button(self.frame_buttons, text="Score anzeigen", command=self.score, bg="cyan", activebackground="cyan")
@@ -68,7 +68,7 @@ class snake_game:
         self.clear_button_select = tk.Button(self.frame_select_player,text="Auswahl löschen",command=self.delete_player, bg="cyan", activebackground="red")
         self.clear_button_select.pack(pady=10)
 
-        self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu_1, bg="cyan", activebackground="cyan")
+        self.back_button_select = tk.Button(self.frame_select_player, text="Zurück", command=self.show_menu, bg="cyan", activebackground="cyan")
         self.back_button_select.pack(pady=10)
 
         #select difficulty
@@ -79,18 +79,21 @@ class snake_game:
         tk.Button(self.frame_difficulty, text="Normal", command=lambda: self.play("normal"), bg="cyan",activebackground="cyan").pack(pady=10)
         tk.Button(self.frame_difficulty, text="Hard", command=lambda: self.play("hard"), bg="cyan",activebackground="cyan").pack(pady=10)
 
-        self.button_back_difficulty = tk.Button(self.frame_difficulty,text="Zurück",command=self.show_menu_3, bg="cyan",activebackground="cyan")
+        self.button_back_difficulty = tk.Button(self.frame_difficulty,text="Zurück",command=self.show_menu, bg="cyan",activebackground="cyan")
         self.button_back_difficulty.pack(pady=10)
 
         self.root.mainloop()
 
-    def show_menu_3(self):
-        self.frame_difficulty.pack_forget()
-        self.frame_buttons.pack(expand=True)
+    def show_menu(self):
 
-    def show_difficulty(self):
-        self.frame_buttons.pack_forget()
-        self.frame_difficulty.pack(expand=True, fill="both")
+        self.frame_create_player.pack_forget()
+        self.frame_select_player.pack_forget()
+        self.frame_difficulty.pack_forget()
+
+        if hasattr(self, "frame_score"):                #ausführen wenn es existiert sonst crash weil frame_score noch nicht erstellt wurde
+            self.frame_score.pack_forget()
+
+        self.frame_buttons.pack(expand=True)
 
     def create_player_save(self):
         name = self.entry.get()
@@ -111,11 +114,6 @@ class snake_game:
         self.frame_buttons.pack_forget()
         self.frame_create_player.pack(expand=True, fill="both")
 
-    #zurück creatplayer auswahl
-    def show_menu(self):
-        self.frame_create_player.pack_forget()
-        self.frame_buttons.pack(expand=True)
-
     def show_select_player(self):
         self.frame_buttons.pack_forget()
         self.frame_select_player.pack(expand=True, fill="both")
@@ -129,11 +127,6 @@ class snake_game:
 
         selected =self.player_listbox.get(selection[0])
         mb.showinfo("Gewählt", f"Du hast den Spieler {selected} gewählt")
-
-    #zurück player auswahl
-    def show_menu_1(self):
-        self.frame_select_player.pack_forget()
-        self.frame_buttons.pack(expand=True)
 
     def delete_player(self):
         selected = self.player_listbox.get(tk.ACTIVE)
@@ -172,13 +165,8 @@ class snake_game:
         for s in scores:
             self.score_listbox.insert(tk.END, f"{s[0]} - {s[1]} Punkte - {s[2]} Sekunden")
 
-        button_back = tk.Button(self.frame_score,text="Zurück",command=self.back_to_menu_2,bg="cyan", activebackground="cyan")
+        button_back = tk.Button(self.frame_score,text="Zurück",command=self.show_menu,bg="cyan", activebackground="cyan")
         button_back.pack(pady=10)
-
-    #zurück score-menü
-    def back_to_menu_2(self):
-        self.frame_score.pack_forget()
-        self.frame_buttons.pack(expand=True)
 
     def exit_game(self):
         self.root.destroy()
