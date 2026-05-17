@@ -39,7 +39,7 @@ class snake_game:
         self.button_select_player = tk.Button(self.frame_buttons, text="Spieler wählen",command=self.show_select_player, bg="cyan", activebackground="cyan")
         self.button_select_player.pack(pady=10)
 
-        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.show_menu, bg="lime green", activebackground="lime green")
+        self.button_play = tk.Button(self.frame_buttons, text="Spielen", command=self.show_difficulty, bg="lime green", activebackground="lime green")
         self.button_play.pack(pady=10)
 
         self.button_score = tk.Button(self.frame_buttons, text="Score anzeigen", command=self.score, bg="cyan", activebackground="cyan")
@@ -83,6 +83,10 @@ class snake_game:
         self.button_back_difficulty.pack(pady=10)
 
         self.root.mainloop()
+
+    def show_difficulty(self):
+        self.frame_buttons.pack_forget()
+        self.frame_difficulty.pack(expand=True, fill="both")
 
     def show_menu(self):
 
@@ -139,7 +143,6 @@ class snake_game:
         self.reload_players()
 
     def play(self, difficulty):
-        print("PLAY BUTTON GEDRÜCKT")
         self.difficulty = difficulty
         selection = self.player_listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
 
