@@ -33,6 +33,7 @@ class snake:
         self.player_name = player_name
         self.running = True
         self.score_multiplier = 1
+        self.obstacles = []
 
         self.setup_game()
 
@@ -43,13 +44,44 @@ class snake:
             self.score_multiplier = 0.5
         elif self.difficulty == "normal":
             self.score_multiplier = 1
+            self.create_normal_obstacles()
         elif self.difficulty == "hard":
             self.score_multiplier = 1.75
+            self.create_hard_obstacles()
 
         self.creat_ui()
         self.bind_keys()
         self.start_game()
         self.root.mainloop()
+
+    #hindernisse
+    def create_normal_obstacles(self):                              #oben links, mitte rechts, unten links
+        self.obstacles = [
+            (100, 100),
+
+            (240, 180),
+
+            (100,260)
+        ]
+
+    def create_hard_obstacles(self):                               #oben links, oben rechts, unten links, unten rechts
+        self.obstacles = [
+            (80, 80), (100, 80), (120, 80),
+            (80, 100), (100, 100), (120, 100),
+            (80, 120), (100, 120), (120, 120),
+
+            (260, 80), (280, 80), (300, 80),
+            (260, 100), (280, 100), (300, 100),
+            (260, 120), (280, 120), (300, 120),
+
+            (80, 260), (100, 260), (120, 260),
+            (80, 280), (100, 280), (120, 280),
+            (80, 300), (100, 300), (120, 300),
+
+            (260, 260), (280, 260), (300, 260),
+            (260, 280), (280, 280), (300, 280),
+            (260, 300), (280, 300), (300, 300),
+        ]
 
     #Oberfläche
     def creat_ui(self):
@@ -78,6 +110,17 @@ class snake:
         self.bg_photo = ImageTk.PhotoImage(self.bg_image)
 
         self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+
+        for obstacle in self.obstacles:
+            x, y = obstacle
+
+            self.canvas.create_rectangle(
+                x,
+                y,
+                x + 20,
+                y + 20,
+                fill="gray"
+            )
 
     # steuerung
     def bind_keys(self):
@@ -215,12 +258,20 @@ class snake:
         head_coords = self.canvas.coords(self.snake_part[0])
         x1, y1, x2, y2 = head_coords
 
+        #wand kollision
         if x1 < 0 or x1 >= 380 or y1 < 0 or y1 >= 380:  # 400-20=380 Snake ist 20px groß, letzter gültiger Startpunkt ist 380 sonst wäre der Kopf schon teilweise außerhalb, bevor die Kollision greift
             return True
 
+        #kollesion mit sich selbst
         for part in self.snake_part[1:]:
             if self.canvas.coords(part) == head_coords:
                 return True
+
+        #hinderniss kollesion
+        for ox, oy in self.obstacles:
+            if (x1, y1) == (ox, oy):
+                return True
+
 
         return False
 
