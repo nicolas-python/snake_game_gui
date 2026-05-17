@@ -139,6 +139,7 @@ class snake_game:
         self.reload_players()
 
     def play(self, difficulty):
+        print("PLAY BUTTON GEDRÜCKT")
         self.difficulty = difficulty
         selection = self.player_listbox.curselection()                         #erste Zeile ausgewählt anzeige =(0,
 
