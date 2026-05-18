@@ -185,8 +185,27 @@ class snake:
 
     #essen
     def spawn_food(self):
-        food_x = random.randint(0, 18) * 20
-        food_y = random.randint(0, 18) * 20
+
+        while True:
+            food_x = random.randint(0, 18) * 20
+            food_y = random.randint(0, 18) * 20
+
+            if (food_x, food_y) in self.obstacles:
+                continue
+
+            collision_with_snake = False
+
+            for part in self.snake_part:
+                x1, y1, x2, y2 = self.canvas.coords(part)
+
+                if (food_x, food_y) == (x1, y1):
+                    collision_with_snake = True
+                    break
+
+            if collision_with_snake:
+                continue
+
+            break
 
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
