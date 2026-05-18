@@ -5,6 +5,8 @@ import random
 from database import save_score
 from difficulty import get_speed
 from PIL import Image, ImageTk     # für canvas hintergrundebilder import
+import colorsys                     #damit kan ich Farben zwischen verschiedenen Farbsystemen umwandeln
+                                    #für HSV -> RGB Farbverläufe / dynamische Farben
 
 
 
@@ -34,6 +36,7 @@ class snake:
         self.running = True
         self.score_multiplier = 1
         self.obstacles = []
+        self.hue = 0                                #HSV= H=Hue(Farbton),S=Saturation(Sättigung),V=Value(Helligkeit)
 
         self.setup_game()
 
@@ -339,11 +342,19 @@ class snake:
             self.root.destroy()
 
     def animate_text(self,i=0):
-        self.color = self.colors[i % len(self.colors)]
 
-        self.canvas.itemconfig(self.game_over_text, fill=self.color)    #itemconfig = spätere änderung danach
+        self.hue += 0.02                    #farbwert erhöhen (langsamer Farbwechsel)
 
-        self.canvas.after(300, self.animate_text, i + 1)
+        if self.hue > 1:                    #hue geht wie ein kreis deswegen zurücksetzen
+            self.hue = 0
+
+        r, g, b = colorsys.hsv_to_rgb(self.hue, 1, 1)           #HSV=RGB umwandeln(1 = volle Sättigung & Helligkeit)
+
+        color = f"#{int(r * 255):02x}{int(g * 255):02x}{int(b * 255):02x}"   #umrechnung in tkinter (RGB in Hex-Farben fur Tkinter
+
+        self.canvas.itemconfig(self.game_over_text, fill=color)
+
+        self.canvas.after(100, self.animate_text)
 
     def reset_game(self):
         self.canvas.delete("all")
