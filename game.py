@@ -60,11 +60,14 @@ class snake:
     #hindernisse
     def create_normal_obstacles(self):                              #oben links, mitte rechts, unten links
         self.obstacles = [
-            (110, 90),
+            (100, 80), (120, 80),
+            (100, 100), (120, 100),
 
-            (250, 180),
+            (240, 180), (260, 180),
+            (240, 200), (260, 200),
 
-            (120,290)
+            (120, 280), (140, 280),
+            (120, 300), (140, 300),
         ]
 
     def create_hard_obstacles(self):                               #oben links, oben rechts, unten links, unten rechts
