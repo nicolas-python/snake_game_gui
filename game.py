@@ -338,6 +338,7 @@ class snake:
 
         if answer == True:
             self.reset_game()
+            print("UI rebuilt?")
             self.difficulty = self.load_difficulty()
             self.start_game()
 
@@ -383,3 +384,7 @@ class snake:
         self.snake_part = []
         self.moved = False
         self.running = True
+
+        print("RESET DONE")
+        print("bg exists:", hasattr(self, "bg_photo"))
+        print("canvas items:", self.canvas.find_all())
