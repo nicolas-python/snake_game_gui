@@ -217,7 +217,6 @@ class snake:
 
     #bewegung aktualisierung
     def move_snake(self):
-        print("Speed aktuell:", self.speed)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -330,6 +329,7 @@ class snake:
         self.running = False
         self.stop_all()
         save_score(self.player_name, self.score, self.game_timer)
+        self.save_difficulty()
 
         self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
         self.animate_text()
@@ -338,11 +338,23 @@ class snake:
 
         if answer == True:
             self.reset_game()
+            self.difficulty = self.load_difficulty()
             self.start_game()
 
         else:
             self.canvas.delete("all")
             self.root.destroy()
+
+    def save_difficulty(self):
+        with open("settings.txt", "w") as f:
+            f.write(self.difficulty)
+
+    def load_difficulty(self):
+        try:
+            with open("settings.txt", "r") as f:
+                return f.read()
+        except:
+            return "normal"
 
     def animate_text(self,i=0):
 
