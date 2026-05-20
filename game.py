@@ -44,12 +44,12 @@ class snake:
         self.speed = get_speed(self.difficulty)
 
         if self.difficulty == "easy":
-            self.score_multiplier = 0.5
-        elif self.difficulty == "normal":
             self.score_multiplier = 1
+        elif self.difficulty == "normal":
+            self.score_multiplier = 1,5
             self.create_normal_obstacles()
         elif self.difficulty == "hard":
-            self.score_multiplier = 1.75
+            self.score_multiplier = 2
             self.create_hard_obstacles()
 
         self.creat_ui()
