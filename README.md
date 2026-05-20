@@ -14,6 +14,7 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Geschwindigkeit steigt im Laufe des Spiels
 - Die Snake ändert beim Essen ihre Farbe
 - Level / steigende Geschwindigkeit
+- Verschiedene Maps/Hindernisse 
 
 ## Installation 
 
@@ -29,7 +30,3 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Pfeiltaste ←  nach links bewegen
 - Pfeiltaste →  nach rechts bewegen
 - P zum Pausieren drücken, erneut drücken zum Fortsetzen 
-
-## Geplant
-- Level-System verbessern
-- Verschiedene Maps/Hindernisse 
