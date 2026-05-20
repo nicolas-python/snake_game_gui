@@ -116,7 +116,6 @@ class snake:
         self.bg_photo = ImageTk.PhotoImage(self.bg_image)
 
         self.bg = self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
-        print(self.bg)
 
         for obstacle in self.obstacles:
             x, y = obstacle
@@ -340,7 +339,7 @@ class snake:
         if answer == True:
             self.reset_game()
             self.difficulty = self.load_difficulty()
-            self.start_game()
+            self.setup_game()
 
         else:
             self.canvas.delete("all")
@@ -373,7 +372,8 @@ class snake:
         self.canvas.after(100, self.animate_text)
 
     def reset_game(self):
-        self.canvas.delete("all")
+        self.canvas.destroy()                           #destroy = Canvas komplett entfernen
+        self.score_label.destroy()                      #delete("all") → Inhalt löschen, Canvas bleibt
 
         self.x = 200
         self.y = 200
