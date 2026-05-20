@@ -115,7 +115,8 @@ class snake:
         self.bg_image = self.bg_image.resize((400, 400))
         self.bg_photo = ImageTk.PhotoImage(self.bg_image)
 
-        self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+        self.bg = self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+        print(self.bg)
 
         for obstacle in self.obstacles:
             x, y = obstacle
@@ -338,7 +339,6 @@ class snake:
 
         if answer == True:
             self.reset_game()
-            print("UI rebuilt?")
             self.difficulty = self.load_difficulty()
             self.start_game()
 
@@ -384,7 +384,3 @@ class snake:
         self.snake_part = []
         self.moved = False
         self.running = True
-
-        print("RESET DONE")
-        print("bg exists:", hasattr(self, "bg_photo"))
-        print("canvas items:", self.canvas.find_all())
