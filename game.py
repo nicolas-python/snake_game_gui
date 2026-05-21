@@ -39,6 +39,7 @@ class snake:
         self.hue = 0                                #HSV= H=Hue(Farbton),S=Saturation(Sättigung),V=Value(Helligkeit)
         self.special_food = None
         self.special_food_type = None
+        self.special_food_cooldown = 0
         self.setup_game()
 
     def setup_game(self):
@@ -180,7 +181,6 @@ class snake:
 
     #Zeit
     def update_timer(self):
-        self.spawn_special_food()
         if self.pause:
             self.canvas.after(1000, self.update_timer)
             return
@@ -190,6 +190,11 @@ class snake:
 
         if self.game_timer % 10 == 0:    #% = Modulo → berechnet den Rest einer Division wen rest 0 -10 wen rest vorhanden geschwindigkeit gleich
             self.speed -=10
+
+        if self.special_food_cooldown > 0:
+            self.special_food_cooldown -= 1
+
+        self.spawn_special_food()
 
         self.stop_timer = self.canvas.after(1000, self.update_timer)
 
@@ -223,6 +228,9 @@ class snake:
         if self.special_food is not None:
             return
 
+        if self.special_food_cooldown > 0:
+            return
+
         if random.random() < 0.2:
             return
 
@@ -244,7 +252,6 @@ class snake:
         self.special_food = self.canvas.create_rectangle(x,y,x + 20,y + 20,fill=color)
 
         self.canvas.after(6000, self.remove_special_food)
-        self.canvas.after(10000, self.spawn_special_food)
 
 
     def remove_special_food(self):
