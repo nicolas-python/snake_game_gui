@@ -144,6 +144,8 @@ class snake:
         self.update_timer()
         self.move_snake()
 
+        self.spawn_special_food()
+
     #bedienung
     #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
     def go_left(self,event):
@@ -178,6 +180,7 @@ class snake:
 
     #Zeit
     def update_timer(self):
+        self.spawn_special_food()
         if self.pause:
             self.canvas.after(1000, self.update_timer)
             return
@@ -217,6 +220,11 @@ class snake:
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
 
     def spawn_special_food(self):
+        if self.special_food is not None:
+            return
+
+        if random.random() < 0.2:
+            return
 
         x = random.randint(0, 18) * 20
         y = random.randint(0, 18) * 20
@@ -235,7 +243,14 @@ class snake:
 
         self.special_food = self.canvas.create_rectangle(x,y,x + 20,y + 20,fill=color)
 
-        self.canvas.after(8000, self.remove_special_food)
+        self.canvas.after(6000, self.remove_special_food)
+        self.canvas.after(10000, self.spawn_special_food)
+
+
+    def remove_special_food(self):
+        if self.special_food is not None:
+            self.canvas.delete(self.special_food)
+            self.special_food = None
 
 
     #bewegung aktualisierung
