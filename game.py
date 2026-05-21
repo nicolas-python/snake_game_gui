@@ -31,13 +31,14 @@ class snake:
         self.pause = False
         self.stop_move_snake = None
         self.stop_timer = None
-        self.colors = ["red", "green", "yellow", "blue", "white", "orange", "purple", "brown", "pink", "gold", "silver", "gray"]
+        self.colors = ["red", "green", "yellow", "blue", "white", "orange", "purple", "brown", "pink", "gold", "silver", "gray", "purple"]
         self.player_name = player_name
         self.running = True
         self.score_multiplier = 1
         self.obstacles = []
         self.hue = 0                                #HSV= H=Hue(Farbton),S=Saturation(Sättigung),V=Value(Helligkeit)
-
+        self.special_food = None
+        self.special_food_type = None
         self.setup_game()
 
     def setup_game(self):
@@ -214,6 +215,28 @@ class snake:
             break
 
         self.food = self.canvas.create_rectangle(food_x, food_y, food_x + 20, food_y + 20, fill="yellow")
+
+    def spawn_special_food(self):
+
+        x = random.randint(0, 18) * 20
+        y = random.randint(0, 18) * 20
+
+        food_type = random.randint(1, 2)
+
+        if food_type == 1:
+            color = "blue"
+            effect = "score"
+
+        elif food_type == 2:
+            color = "purple"
+            effect = "grow"
+
+        self.special_food_type = effect
+
+        self.special_food = self.canvas.create_rectangle(x,y,x + 20,y + 20,fill=color)
+
+        self.canvas.after(8000, self.remove_special_food)
+
 
     #bewegung aktualisierung
     def move_snake(self):
