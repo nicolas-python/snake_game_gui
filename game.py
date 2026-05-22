@@ -314,16 +314,19 @@ class snake:
         if self.special_food_collision():
             if self.special_food_type == "score":
                 self.score += 3
+                self.special_food_message(self.special_food_type)   # effekt mit übergeben
 
             elif self.special_food_type == "grow":
                 self.grow_snake()
+                self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "slow":
                 self.speed += 50
+                self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "poison":
                 self.score -= 10
-                self.posion_message()
+                self.special_food_message(self.special_food_type)
 
             self.canvas.delete(self.special_food)
             self.special_food = None
@@ -335,12 +338,39 @@ class snake:
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
 
-    def posion_message(self):
-        self.score_label.config(text=f"Score: verloren {self.score} - Zeit: {self.game_timer}")
+    def special_food_message(self, effect):
+        if effect == "score":
+            text = "+3 Punkte!"
+            color = "blue"
 
-        msg = self.canvas.create_text(200, 200, text="-10 Punkte!", fill="hotpink", font=("Arial", 16, "bold"))
+        elif effect == "grow":
+            text = "Gewachsen!"
+            color = "green"
 
-        self.canvas.after(1000, lambda: self.canvas.delete(msg))
+        elif effect == "slow":
+            text = "Verlangsamt!"
+            color = "light blue"
+
+        elif effect == "poison":
+            text = "-10 Punkte!"
+            color = "violet"
+
+        else:
+            return
+
+        msg = self.floating_text(200, 200,text=text,fill=color,font=("Arial", 16, "bold"))
+
+        if msg is not None:
+            self.canvas.after(1000, lambda: self.canvas.delete(msg))
+
+    def floating_text(self, x, y, text, fill, font):
+        msg = self.canvas.create_text(x, y,text=text,fill=fill,font=font)
+
+
+
+
+
+        return msg
 
     def stop_all(self):
         if self.stop_move_snake is not None:
