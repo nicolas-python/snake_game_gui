@@ -39,7 +39,7 @@ class snake:
         self.hue = 0                                #HSV= H=Hue(Farbton),S=Saturation(Sättigung),V=Value(Helligkeit)
         self.special_food = None
         self.special_food_type = None
-        self.special_food_cooldown = 0
+        self.special_food_cooldown = 10
         self.setup_game()
 
     def setup_game(self):
@@ -231,7 +231,7 @@ class snake:
         if self.special_food_cooldown > 0:
             return
 
-        if random.random() < 0.2:
+        if random.random() > 0.1:
             return
 
         x = random.randint(0, 18) * 20
@@ -251,7 +251,7 @@ class snake:
 
         self.special_food = self.canvas.create_rectangle(x,y,x + 20,y + 20,fill=color)
 
-        self.canvas.after(6000, self.remove_special_food)
+        self.canvas.after(5000, self.remove_special_food)
 
 
     def remove_special_food(self):
@@ -303,6 +303,16 @@ class snake:
             self.grow_snake()
             self.spawn_food()
 
+        if self.special_food_collision():
+            if self.special_food_type == "score":
+                self.score += 3
+
+            elif self.special_food_type == "grow":
+                self.grow_snake()
+
+            self.canvas.delete(self.special_food)
+            self.special_food = None
+
         if self.collision():
             self.game_over()
             return
@@ -351,6 +361,14 @@ class snake:
 
         head_coords = self.canvas.coords(self.snake_part[0])
         return self.canvas.coords(self.food) == head_coords
+
+    def special_food_collision(self):
+        if self.special_food is None :
+            return False
+
+        head_coords = self.canvas.coords(self.snake_part[0])
+
+        return self.canvas.coords(self.special_food) == head_coords
 
 
     def grow_snake(self):
