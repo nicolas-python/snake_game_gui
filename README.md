@@ -14,13 +14,17 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Geschwindigkeit steigt im Laufe des Spiels
 - Die Snake ändert beim Essen ihre Farbe
 - Level / steigende Geschwindigkeit
-- Verschiedene Maps/Hindernisse 
+- Verschiedene Maps/Hindernisse
+- Einführung eines Special-Food-Systems mit verschiedenen Effekten:
+  - (Lila ) Wachstums-Food: Die Schlange wächst um 1 Block
+  - (Blau)  Punkte-Food: Gibt zusätzliche 3 Punkte
+- Special Food spawnt zufällig + Cooldown
 
 ## Installation 
 
 1. Python installieren
 2. Projekt herunterladen oder klonen
-3.Hauptdatei starten:
+3. Hauptdatei starten:
   python main.py
 
 ## Steuerung
