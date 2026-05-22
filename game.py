@@ -244,8 +244,16 @@ class snake:
             effect = "score"
 
         elif food_type == 2:
-            color = "purple"
+            color = "green"
             effect = "grow"
+
+        elif food_type == 3:
+            color = "Light blue"
+            effect = "slow"
+
+        elif food_type == 4:
+            color ="light purple"
+            effect = "poison"
 
         self.special_food_type = effect
 
@@ -306,9 +314,17 @@ class snake:
         if self.special_food_collision():
             if self.special_food_type == "score":
                 self.score += 3
+                self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
 
             elif self.special_food_type == "grow":
                 self.grow_snake()
+
+            elif self.special_food_type == "slow":
+                self.speed += 50
+
+            elif self.special_food_type == "poison":
+                self.score -= 10
+                self.posion_message()
 
             self.canvas.delete(self.special_food)
             self.special_food = None
@@ -319,6 +335,11 @@ class snake:
 
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
+
+    def posion_message(self):
+        self.score_label.config(text=f"Score: {self.score} - Zeit: {self.game_timer}")
+
+        msg = self.canvas.create_text(200, 200, text="-2 Punkte!", fill="hotpink", font=("Arial", 16, "bold"))
 
     def stop_all(self):
         if self.stop_move_snake is not None:
