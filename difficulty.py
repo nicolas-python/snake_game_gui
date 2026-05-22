@@ -2,13 +2,13 @@
 
 def get_speed(difficulty):
     if difficulty == "easy":                #Raster nur bei easy (difficulty == 0) anzeigen
-        return 150
+        return 200
 
     elif difficulty == "normal":
-        return 115
+        return 125
 
     elif difficulty == "hard":
-        return 80
+        return 100
 
     else:
-        return 115       #standart
+        return 125       #standart
