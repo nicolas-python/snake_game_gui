@@ -43,7 +43,8 @@ class snake:
         self.setup_game()
 
     def setup_game(self):
-        self.speed = get_speed(self.difficulty)
+        self.base_speed = get_speed(self.difficulty)
+        self.speed = self.base_speed
 
         if self.difficulty == "easy":
             self.score_multiplier = 1
@@ -101,6 +102,9 @@ class snake:
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
         self.canvas.pack()
 
+        self.effect_label = tk.Label(self.root, text="Effect: ", fg="black", bg="white")
+        self.effect_label.place(x=0, y=0)
+
         if self.difficulty == "easy":
             bg_path = random.choice([
                 "backgrounds/easy_gras.png",
@@ -122,13 +126,7 @@ class snake:
         for obstacle in self.obstacles:
             x, y = obstacle
 
-            self.canvas.create_rectangle(
-                x,
-                y,
-                x + 20,
-                y + 20,
-                fill="gray"
-            )
+            self.canvas.create_rectangle(x,y,x + 20,y + 20,fill="gray")
 
     # steuerung
     def bind_keys(self):
@@ -231,7 +229,7 @@ class snake:
         if self.special_food_cooldown > 0:
             return
 
-        if random.random() > 0.1:
+        if random.random() > 0.2:
             return
 
         x = random.randint(0, 18) * 20
@@ -313,15 +311,21 @@ class snake:
 
         if self.special_food_collision():
             if self.special_food_type == "score":
-                self.score += 3
+                self.score += 4
                 self.special_food_message(self.special_food_type)   # effekt mit übergeben
 
             elif self.special_food_type == "grow":
+                self.score += 2
                 self.grow_snake()
                 self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "slow":
-                self.speed += 50
+                self.effect_label.config(text="Slow aktiv!")
+                self.speed = self.base_speed + 50
+
+                self.canvas.after(10000, self.reset_speed)
+                self.canvas.after(10000, self.clear_effect_text)
+
                 self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "poison":
@@ -338,13 +342,19 @@ class snake:
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
 
+    def clear_effect_text(self):
+        self.effect_label.config(text="")
+
+    def reset_speed(self):
+        self.speed = self.base_speed
+
     def special_food_message(self, effect):
         if effect == "score":
             text = "+3 Punkte!"
             color = "blue"
 
         elif effect == "grow":
-            text = "Gewachsen!"
+            text = "Gewachsen +2 Punkte!"
             color = "green"
 
         elif effect == "slow":
