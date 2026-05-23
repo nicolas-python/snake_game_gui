@@ -364,12 +364,21 @@ class snake:
             self.canvas.after(1000, lambda: self.canvas.delete(msg))
 
     def floating_text(self, x, y, text, fill, font):
+
         msg = self.canvas.create_text(x, y,text=text,fill=fill,font=font)
 
+        def animate():              #innere Funktion für die Animation
+            nonlocal y              # nonlocal = wichtig weil benutzt das ursprüngliche y
+            y -=2                   #text geht nach oben jedes ma 2 Pixel höher
 
+            self.canvas.coords(msg, x, y)
+            if y > 120:
+                self.canvas.after(30, animate)
 
+            else:
+                self.canvas.delete(msg)
 
-
+        animate()
         return msg
 
     def stop_all(self):
