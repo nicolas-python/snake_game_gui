@@ -40,6 +40,8 @@ class snake:
         self.special_food = None
         self.special_food_type = None
         self.special_food_cooldown = 10
+        self.slow_timer = 0
+        self.slow_active = False
         self.setup_game()
 
     def setup_game(self):
@@ -102,7 +104,7 @@ class snake:
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg="black")
         self.canvas.pack()
 
-        self.effect_label = tk.Label(self.root, text="Effect: ", fg="black", bg="white")
+        self.effect_label = tk.Label(self.root, text="", fg="black", bg="white")
         self.effect_label.place(x=0, y=0)
 
         if self.difficulty == "easy":
@@ -320,10 +322,16 @@ class snake:
                 self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "slow":
-                self.effect_label.config(text="Slow aktiv!")
+                self.effect_label.config(text= "Slow aktiv!")
                 self.speed = self.base_speed + 50
 
                 self.canvas.after(10000, self.reset_speed)
+
+                self.speed = self.base_speed + 50
+                self.slow_active = True
+                self.slow_timer = 10
+                self.update_slow_timer()
+
                 self.canvas.after(10000, self.clear_effect_text)
 
                 self.special_food_message(self.special_food_type)
@@ -341,6 +349,22 @@ class snake:
 
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
+
+    def update_slow_timer(self):
+
+        if not self.slow_active:
+            return
+
+        self.effect_label.config(text=f"Slow aktiv: {self.slow_timer}s")
+        self.slow_timer -=1
+
+        if self.slow_timer < 0:
+            self.rest_speed()
+            self.slow_aktiv = False
+            self.effect_label.config(text="")
+            return
+
+        self.canvas.after(1000, self.update_slow_timer)
 
     def clear_effect_text(self):
         self.effect_label.config(text="")
