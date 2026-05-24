@@ -18,7 +18,7 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
 - Einführung eines Special-Food-Systems mit verschiedenen Effekten:
   - (Blau) Punkte-Food: Gibt zusätzlich 3 Punkte
   - (Grün) Wachstums-Food: Die Schlange wächst um 1 Block
-  - (Hellblau) Verlangsamungs-Food: Reduziert die Geschwindigkeit
+  - (Hellblau) Verlangsamungs-Food: Reduziert die Geschwindigkeit für 10 Sekunden
   - (Violett) Gift-Food: Zieht 10 Punkte vom Score ab
 - Special Food spawnt zufällig + Cooldown
 
