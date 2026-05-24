@@ -359,7 +359,7 @@ class snake:
         self.slow_timer -=1
 
         if self.slow_timer < 0:
-            self.rest_speed()
+            self.reset_speed()
             self.slow_aktiv = False
             self.effect_label.config(text="")
             return
