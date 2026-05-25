@@ -47,11 +47,15 @@ class snake:
     def setup_game(self):
         self.base_speed = get_speed(self.difficulty)
         self.speed = self.base_speed
-        self.secret_map = False
-        if random.random() < 0.5:
-            self.secret_map = True
 
-        if self.difficulty == "easy":
+        self.secret_map = False
+        self.moving_obstacles_enabled = False
+
+        if random.random() < 0.6:
+            self.secret_map = True
+            self.moving_obstacles_enabled = True
+
+        elif self.difficulty == "easy":
             self.score_multiplier = 1
         elif self.difficulty == "normal":
             self.score_multiplier = 1.5
@@ -65,7 +69,7 @@ class snake:
         self.start_game()
         self.root.mainloop()
 
-    #hindernisse
+    #hindernisse, #obstacles = nur Positionen (Logik)
     def create_normal_obstacles(self):                              #oben links, mitte rechts, unten links
         self.obstacles = [
             (100, 80), (120, 80),
@@ -96,6 +100,18 @@ class snake:
             (260, 280), (280, 280), (300, 280),
             (260, 300), (280, 300), (300, 300),
         ]
+
+    def moving_obstacles(self):
+        if not self.moving_obstacles_enabled:
+            return
+
+        if not hasattr(self, "obstacle_objects"):
+            return
+
+        for obj in self.obstacle_objects:
+            self.canvas.move(obj, 2, 0)                     #bewegung der pixel also 2 nach rechts 0 nach unten
+
+        self.canvas.after(50, self.moving_obstacles)
 
     #Oberfläche
     def creat_ui(self):
@@ -131,10 +147,12 @@ class snake:
 
         self.bg = self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
 
-        for obstacle in self.obstacles:
-            x, y = obstacle
+        self.obstacle_objects = []
+        #obstacle_objects = sichtbare Canvas-Objekte (Grafik/Bewegung)
+        for x, y in self.obstacles:
+            obj = self.canvas.create_rectangle(x, y, x + 20, y + 20,fill="gray")
+            self.obstacle_objects.append(obj)
 
-            self.canvas.create_rectangle(x,y,x + 20,y + 20,fill="gray")
 
     # steuerung
     def bind_keys(self):
@@ -152,6 +170,8 @@ class snake:
         self.move_snake()
 
         self.spawn_special_food()
+        if self.moving_obstacles_enabled:
+            self.moving_obstacles()
 
     #bedienung
     #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
