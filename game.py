@@ -47,6 +47,9 @@ class snake:
     def setup_game(self):
         self.base_speed = get_speed(self.difficulty)
         self.speed = self.base_speed
+        self.secret_map = False
+        if random.random() < 0.5:
+            self.secret_map = True
 
         if self.difficulty == "easy":
             self.score_multiplier = 1
@@ -107,7 +110,10 @@ class snake:
         self.effect_label = tk.Label(self.root, text="", fg="black", bg="white")
         self.effect_label.place(x=0, y=0)
 
-        if self.difficulty == "easy":
+        if self.secret_map:
+            bg_path = "backgrounds/secret_map.png"
+
+        elif self.difficulty == "easy":
             bg_path = random.choice([
                 "backgrounds/easy_gras.png",
                 "backgrounds/easy_gras_2.png"])
