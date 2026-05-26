@@ -452,10 +452,12 @@ class snake:
 
     #Kollision
     def collision(self):
+        print("collision check läuft")   #1
         if not self.moved:
             return False
 
         head_coords = self.canvas.coords(self.snake_part[0])
+        print("HEAD:", head_coords) #4
         x1, y1, x2, y2 = head_coords
 
         #wand kollision
@@ -470,8 +472,10 @@ class snake:
         #hindernisse bewegend kollesion(secret map)
         #secret map zuerst prüfen weil moving obstacles ersetzen normale Hindernisse
         if self.moving_obstacles_enabled:
+            print("SECRET MAP COLLISION BLOCK AKTIV")   #2
             for obj in self.obstacle_objects:
                 ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
+                print("Hindernis:", ox1, oy1, ox2, oy2)  #3
 
                 if (x1, y1) == (ox1, oy1):
                     return True
