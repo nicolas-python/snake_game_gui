@@ -467,17 +467,19 @@ class snake:
             if self.canvas.coords(part) == head_coords:
                 return True
 
-        #hinderniss kollesion
-        for ox, oy in self.obstacles:
-            if (x1, y1) == (ox, oy):
-                return True
-
         #hindernisse bewegend kollesion(secret map)
+        #secret map zuerst prüfen weil moving obstacles ersetzen normale Hindernisse
         if self.moving_obstacles_enabled:
             for obj in self.obstacle_objects:
                 ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
 
                 if (x1, y1) == (ox1, oy1):
+                    return True
+
+        # hinderniss kollesion
+        else:
+            for ox, oy in self.obstacles:
+                if (x1, y1) == (ox, oy):
                     return True
 
         return False
