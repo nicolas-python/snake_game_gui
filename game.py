@@ -43,6 +43,7 @@ class snake:
         self.slow_timer = 0
         self.slow_active = False
         self.stop_obstacles = None
+        self.obstacle_direction = 1
         self.setup_game()
 
     def setup_game(self):
@@ -108,11 +109,20 @@ class snake:
 
         if not hasattr(self, "obstacle_objects"):
             return
-
+        #bewegung starten
         for obj in self.obstacle_objects:
-            self.canvas.move(obj, 20, 0)                     #bewegung der pixel also 2 nach rechts 0 nach unten
+            self.canvas.move(obj, 20 * self.obstacle_direction, 0)
+        #bounce loop
+        for obj in self.obstacle_objects:
+            x1, y1, x2, y2 = self.canvas.coords(obj)
 
-        self.stop_obstacles = self.canvas.after(350, self.moving_obstacles)
+            if x2 >= 400:
+                self.obstacle_direction = -1        #links bouncen
+
+            if x1 <= 0:
+                self.obstacle_direction = 1         #rechts bouncen
+
+        self.stop_obstacles = self.canvas.after(300, self.moving_obstacles)
 
     #Oberfläche
     def creat_ui(self):
