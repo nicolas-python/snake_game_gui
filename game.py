@@ -42,6 +42,7 @@ class snake:
         self.special_food_cooldown = 10
         self.slow_timer = 0
         self.slow_active = False
+        self.stop_obstacles = None
         self.setup_game()
 
     def setup_game(self):
@@ -111,7 +112,7 @@ class snake:
         for obj in self.obstacle_objects:
             self.canvas.move(obj, 20, 0)                     #bewegung der pixel also 2 nach rechts 0 nach unten
 
-        self.canvas.after(300, self.moving_obstacles)
+        self.stop_obstacles = self.canvas.after(350, self.moving_obstacles)
 
     #Oberfläche
     def creat_ui(self):
@@ -449,6 +450,10 @@ class snake:
         if self.stop_timer is not None:
             self.canvas.after_cancel(self.stop_timer)
             self.stop_timer = None
+
+        if self.stop_obstacles is not None:
+            self.canvas.after_cancel(self.stop_obstacles)
+            self.stop_obstacles = None
 
     #Kollision
     def collision(self):
