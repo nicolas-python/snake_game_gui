@@ -109,7 +109,7 @@ class snake:
             return
 
         for obj in self.obstacle_objects:
-            self.canvas.move(obj, 2, 0)                     #bewegung der pixel also 2 nach rechts 0 nach unten
+            self.canvas.move(obj, 20, 0)                     #bewegung der pixel also 2 nach rechts 0 nach unten
 
         self.canvas.after(50, self.moving_obstacles)
 
