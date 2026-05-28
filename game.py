@@ -242,7 +242,27 @@ class snake:
             food_x = random.randint(0, 18) * 20
             food_y = random.randint(0, 18) * 20
 
-            if (food_x, food_y) in self.obstacles:
+            collision_with_obstacle = False
+
+            #normale hindernisse
+            if not self.moving_obstacles_enabled:
+
+                for ox, oy in self.obstacles:
+                    if (food_x, food_y) == (ox, oy):
+                        collision_with_obstacle = True
+                        break
+
+            # bewegende Hindernisse
+            else:
+
+                for obj in self.obstacle_objects:
+                    ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
+
+                    if (food_x, food_y) == (ox1, oy1):
+                        collision_with_obstacle = True
+                        break
+
+            if collision_with_obstacle:
                 continue
 
             collision_with_snake = False
@@ -271,8 +291,39 @@ class snake:
         if random.random() > 0.2:
             return
 
-        x = random.randint(0, 18) * 20
-        y = random.randint(0, 18) * 20
+        while True:
+            x = random.randint(0, 18) * 20
+            y = random.randint(0, 18) * 20
+
+            collision_with_obstacle = False
+            collision_with_snake = False
+
+            if not self.moving_obstacles_enabled:
+
+                for ox, oy in self.obstacles:
+                    if (x, y) == (ox, oy):
+                        collision_with_obstacle = True
+                        break
+
+            else:
+
+                for obj in self.obstacle_objects:
+                    ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
+                    if (x, y) == (ox1, oy1):
+                        collision_with_obstacle = True
+                        break
+
+            for part in self.snake_part:
+                x1, y1, x2, y2 = self.canvas.coords(part)
+
+                if (x, y) == (x1, y1):
+                    collision_with_snake = True
+                    break
+
+            if collision_with_obstacle or collision_with_snake:
+                continue
+
+            break
 
         food_type = random.randint(1, 4)
 
