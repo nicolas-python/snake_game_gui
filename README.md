@@ -21,6 +21,8 @@ Ein Snake-Spiel mit grafischer Oberfläche, entwickelt in Python mit Tkinter. De
   - (Hellblau) Verlangsamungs-Food: Reduziert die Geschwindigkeit für 10 Sekunden
   - (Violett) Gift-Food: Zieht 10 Punkte vom Score ab
 - Special Food spawnt zufällig + Cooldown
+- Zufälliges Secret-Map-Event
+- Bewegliche Hindernisse in der Secret Map
 
 ## Installation 
 
