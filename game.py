@@ -618,7 +618,7 @@ class snake:
         save_score(self.player_name, self.score, self.game_timer)
         self.save_difficulty()
 
-        self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 20, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
+        self.game_over_text = self.canvas.create_text(200, 100, text="Game Over", fill="white",font=("Arial", 40, "bold"))  #font =bestimmt, wie der text aussieht (Schriftart, Größe, Stil)
         self.animate_text()
 
         answer = mb.askyesno("Nochmal spielen?", "Willst du direkt nochmal spielen?")
@@ -651,12 +651,11 @@ class snake:
             self.hue = 0
 
         r, g, b = colorsys.hsv_to_rgb(self.hue, 1, 1)           #HSV=RGB umwandeln(1 = volle Sättigung & Helligkeit)
-
         color = f"#{int(r * 255):02x}{int(g * 255):02x}{int(b * 255):02x}"   #umrechnung in tkinter (RGB in Hex-Farben fur Tkinter
 
         self.canvas.itemconfig(self.game_over_text, fill=color)
 
-        self.canvas.after(100, self.animate_text)
+        self.canvas.after(60, self.animate_text)
 
     def reset_game(self):
         self.canvas.destroy()                           #destroy = Canvas komplett entfernen
