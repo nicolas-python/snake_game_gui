@@ -63,7 +63,7 @@ class snake:
             self.score_multiplier = 2
             self.create_hard_obstacles()
                                                         # dan secret map laden das hindernisse gespeichert sind und () nicht leer
-        if random.random() < 0.6:
+        if random.random() < 0.1:
             self.secret_map = True
             self.moving_obstacles_enabled = True
 
