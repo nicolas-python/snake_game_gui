@@ -442,10 +442,6 @@ class snake:
             self.canvas.delete(self.special_food)
             self.special_food = None
 
-        if self.collision():
-            self.game_over()
-            return
-
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
 
