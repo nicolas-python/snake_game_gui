@@ -359,6 +359,8 @@ class snake:
 
     #bewegung aktualisierung
     def move_snake(self):
+        print("HEAD:", self.x, self.y)
+        print("DIRECTION:", self.direction)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -521,6 +523,9 @@ class snake:
     def collision(self):
         if not self.moved:
             return False
+
+        for obj in self.obstacle_objects:
+            print("OBSTACLE:", self.canvas.coords(obj))
 
         head_coords = self.canvas.coords(self.snake_part[0])
         x1, y1, x2, y2 = head_coords
