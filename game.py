@@ -359,8 +359,6 @@ class snake:
 
     #bewegung aktualisierung
     def move_snake(self):
-        print("HEAD:", self.x, self.y)
-        print("DIRECTION:", self.direction)
         if self.pause:
             self.canvas.after(200, self.move_snake)
             return
@@ -372,6 +370,9 @@ class snake:
         if self.canvas.itemcget(self.snake_part[1], "state") == "hidden" and self.direction is not None:
             self.canvas.itemconfig(self.snake_part[1], state="normal")
 
+        next_x = self.x
+        next_y = self.y
+
         step = 20
 
         # alte Position speichern
@@ -380,13 +381,20 @@ class snake:
             old_positions.append(self.canvas.coords(part))
 
         if self.direction == "left":
-            self.x -= step
+            next_x -= step
         elif self.direction == "right":
-            self.x += step
+            next_x += step
         elif self.direction == "up":
-            self.y -= step
+            next_y -= step
         elif self.direction == "down":
-            self.y += step
+            next_y += step
+
+        if self.check_collision(next_x, next_y):
+            self.game_over()
+            return
+
+        self.x = next_x
+        self.y = next_y
 
         # kopf bewegen
         self.canvas.coords(self.snake_part[0], self.x, self.y, self.x + 20, self.y + 20)  # bewegung von kopf aus
@@ -440,6 +448,26 @@ class snake:
 
         # aktualisierung
         self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
+
+    def check_collision(self, x, y):
+        #Wand
+        if x < 0 or x >= 380 or y < 0 or y >= 380:
+            return True
+
+        #hinderniss normal
+        for ox, oy in self.obstacles:
+            if (x, y) == (ox, oy):
+                return True
+
+        #hindernisse beweglich
+        if self.moving_obstacles_enabled:
+            for obj in self.obstacle_objects:
+                ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
+
+                if ox1 <= x < ox2 and oy1 <= y < oy2:
+                    return True
+
+        return False
 
     def update_slow_timer(self):
 
@@ -523,9 +551,6 @@ class snake:
     def collision(self):
         if not self.moved:
             return False
-
-        for obj in self.obstacle_objects:
-            print("OBSTACLE:", self.canvas.coords(obj))
 
         head_coords = self.canvas.coords(self.snake_part[0])
         x1, y1, x2, y2 = head_coords
