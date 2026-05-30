@@ -183,7 +183,7 @@ class snake:
 
         self.spawn_special_food()
         if self.moving_obstacles_enabled:
-            self.moving_obstacles()
+            self.canvas.after(5000, self.moving_obstacles)
 
     #bedienung
     #zuweisung der tasten event = funktion wird nur ausgeführt, wenn dieses Event passiert
