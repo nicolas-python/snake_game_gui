@@ -53,11 +53,8 @@ class snake:
         self.secret_map = False
         self.moving_obstacles_enabled = False
 
-        if random.random() < 0.6:
-            self.secret_map = True
-            self.moving_obstacles_enabled = True
-
-        elif self.difficulty == "easy":
+                                                        # erst hindernisse setzen
+        if self.difficulty == "easy":
             self.score_multiplier = 1
         elif self.difficulty == "normal":
             self.score_multiplier = 1.5
@@ -65,6 +62,10 @@ class snake:
         elif self.difficulty == "hard":
             self.score_multiplier = 2
             self.create_hard_obstacles()
+                                                        # dan secret map laden das hindernisse gespeichert sind und () nicht leer
+        if random.random() < 0.6:
+            self.secret_map = True
+            self.moving_obstacles_enabled = True
 
         self.creat_ui()
         self.bind_keys()
