@@ -450,17 +450,18 @@ class snake:
         if x < 0 or x >= 380 or y < 0 or y >= 380:
             return True
 
-        #hinderniss normal
-        for ox, oy in self.obstacles:
-            if (x, y) == (ox, oy):
-                return True
-
         #hindernisse beweglich
         if self.moving_obstacles_enabled:
             for obj in self.obstacle_objects:
                 ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
 
                 if ox1 <= x < ox2 and oy1 <= y < oy2:
+                    return True
+
+        #hinderniss normal
+        else:
+            for ox, oy in self.obstacles:
+                if (x, y) == (ox, oy):
                     return True
 
         return False
