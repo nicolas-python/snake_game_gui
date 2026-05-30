@@ -105,7 +105,10 @@ class snake:
         ]
 
     def moving_obstacles(self):
-        if not self.moving_obstacles_enabled:
+        if not self.moving_obstacles_enabled:                       #=feature aktiv? (secret map / bewegende hindernisse)
+            return
+
+        if not self.running:                                        #=spiel aktiv? (false = Game over = alles stoppen(stop all funktion))
             return
 
         if not hasattr(self, "obstacle_objects"):
