@@ -351,6 +351,8 @@ class snake:
 
         self.special_food = self.canvas.create_rectangle(x,y,x + 20,y + 20,fill=color)
 
+        self.special_food_cooldown = 15     #cooldown wieder hochsetzen sonst spawnd es immer
+
         self.canvas.after(5000, self.remove_special_food)
 
 
