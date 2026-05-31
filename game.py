@@ -39,7 +39,7 @@ class snake:
         self.hue = 0                                #HSV= H=Hue(Farbton),S=Saturation(Sättigung),V=Value(Helligkeit)
         self.special_food = None
         self.special_food_type = None
-        self.special_food_cooldown = 10
+        self.special_food_cooldown = 15
         self.slow_timer = 0
         self.slow_active = False
         self.stop_obstacles = None
