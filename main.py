@@ -160,12 +160,17 @@ class snake_game:
         self.frame_score = tk.Frame(self.root, bg ="#93c433")
         self.frame_score.pack(expand=True, fill="both")
 
+        #highscore box
+        highlight = tk.Frame(self.frame_score, bg = "black")
+        highlight.pack(pady=10)
+        title = tk.Label(self.frame_score, text="🏆 HIGHSCORE 🏆", bg="Yellow", font = "Arial 12 bold")
+        title.pack(pady=10)
+
         highscore = get_highscores()
 
-        for i, (name, score, game_timer) in enumerate(
-                highscore):  # enumerate= liefert Index + Wert aus einer Liste (z.B. für Nummerierungen)
+        for i, (name, score, game_timer) in enumerate(highscore):               # enumerate= liefert Index + Wert aus einer Liste (z.B. für Nummerierungen)
             text = f"{i + 1} - {name} - {score} Punkte - {game_timer} Sekunden"
-            tk.Label(self.frame_score, text=text, bg="#93c433").pack(pady=10)
+            tk.Label(self.frame_score, text=text,bg="yellow").pack(pady=10)
 
         label = tk.Label(self.frame_score, text="Score:",bg="#93c433")
         label.pack(pady=10)
