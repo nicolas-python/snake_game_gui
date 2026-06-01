@@ -155,16 +155,17 @@ class snake_game:
         snake(selected, self.difficulty)
 
     def score(self):
+        self.frame_buttons.pack_forget()
+
+        self.frame_score = tk.Frame(self.root, bg ="#93c433")
+        self.frame_score.pack(expand=True, fill="both")
+
         highscore = get_highscores()
 
         for i, (name, score, game_timer) in enumerate(
                 highscore):  # enumerate= liefert Index + Wert aus einer Liste (z.B. für Nummerierungen)
-            text = f"{i + 1} - {name} - {score} - {game_timer}"
-            tk.Label(self.root, text=text, bg="#93c433").pack(pady=10)
-
-        self.frame_buttons.pack_forget()
-        self.frame_score = tk.Frame(self.root, bg ="#93c433")
-        self.frame_score.pack(expand=True, fill="both")
+            text = f"{i + 1} - {name} - {score} Punkte - {game_timer} Sekunden"
+            tk.Label(self.frame_score, text=text, bg="#93c433").pack(pady=10)
 
         label = tk.Label(self.frame_score, text="Score:",bg="#93c433")
         label.pack(pady=10)
