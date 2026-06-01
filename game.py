@@ -395,6 +395,8 @@ class snake:
             next_y += step
 
         if self.check_collision(next_x, next_y):
+            print("AKTUELL:", self.x, self.y)
+            print("NÄCHSTER SCHRITT:", next_x, next_y)
             self.game_over()
             return
 
@@ -453,6 +455,7 @@ class snake:
     def check_collision(self, x, y):
         #Wand
         if x < 0 or x >= 380 or y < 0 or y >= 380:
+            print("WANDKOLLISION:", x, y)
             return True
 
         #hindernisse beweglich
