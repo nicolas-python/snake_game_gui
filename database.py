@@ -72,8 +72,8 @@ def get_highscores():
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT player_name, score, game_time
-        FROM scores
+        SELECT name, score, time
+        FROM players
         ORDER BY score DESC
         LIMIT 3
     """)
