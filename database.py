@@ -67,3 +67,15 @@ def save_score(name,score, time):
     conn.commit()
     conn.close()
 
+def get_highscores():
+    conn = sqlite3.connect("snake.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT player_name, score, game_time
+        FROM scores
+        ORDER BY score DESC
+        LIMIT 3
+    """)
+
+    return cursor.fetchall()

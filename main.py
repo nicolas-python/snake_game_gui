@@ -10,6 +10,7 @@ from database import get_scores
 from player import create_player as cp
 from player import select_player as sp
 from database import init_db
+from database import get_highscores
 from game import snake
 from PIL import Image,ImageTk
 
