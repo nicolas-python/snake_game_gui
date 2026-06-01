@@ -454,7 +454,7 @@ class snake:
 
     def check_collision(self, x, y):
         #Wand
-        if x < 0 or x >= 380 or y < 0 or y >= 380:
+        if x < 0 or x > 380 or y < 0 or y > 380:
             print("WANDKOLLISION:", x, y)
             return True
 
