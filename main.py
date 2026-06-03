@@ -163,7 +163,7 @@ class snake_game:
         #highscore box
         highlight = tk.Frame(self.frame_score, bg = "black")
         highlight.pack(pady=10)
-        title = tk.Label(self.frame_score, text="🏆 HIGHSCORE 🏆", bg="Yellow", font = "Arial 12 bold")
+        title = tk.Label(self.frame_score, text="🏆 HIGHSCORE 🏆", bg="Yellow", font=("Segoe UI Emoji", 17))     ## Windows Emoji-Schriftart
         title.pack(pady=10)
 
         highscore = get_highscores()
