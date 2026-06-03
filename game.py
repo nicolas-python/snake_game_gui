@@ -42,6 +42,7 @@ class snake:
         self.special_food_cooldown = 15
         self.slow_timer = 0
         self.slow_active = False
+        self.speed_boost = False
         self.stop_obstacles = None
         self.obstacle_direction = 1
         self.setup_game()
@@ -329,7 +330,7 @@ class snake:
 
             break
 
-        food_type = random.randint(1, 4)
+        food_type = random.randint(1, 5)
 
         if food_type == 1:
             color = "blue"
@@ -346,6 +347,13 @@ class snake:
         elif food_type == 4:
             color ="violet"
             effect = "poison"
+
+        elif food_type == 5:
+            color = "white"
+            effect = "speed_boost"
+
+        elif food_type == 6:
+            color = "shrink"
 
         self.special_food_type = effect
 
@@ -444,11 +452,27 @@ class snake:
                 self.score -= 10
                 self.special_food_message(self.special_food_type)
 
+            elif self.special_food_type == "speed_boost":
+                self.speed_boost = True
+                self.effect_label.config(text="Speed Boost!")
+                self.canvas.after(10000, self.reset_speed_boost)
+                self.special_food_message(self.special_food_type)
+
+
             self.canvas.delete(self.special_food)
             self.special_food = None
 
+        #aktuellen speed
+        current_speed = self.speed
+
+        if self.speed_boost:
+            current_speed = max(50, self.speed - 80)
+
         # aktualisierung
-        self.stop_move_snake = self.canvas.after(self.speed, self.move_snake)
+        self.stop_move_snake = self.canvas.after(current_speed, self.move_snake)
+
+    def reset_speed_boost(self):
+        self.speed_boost = False
 
     def check_collision(self, x, y):
         #Wand
@@ -509,6 +533,14 @@ class snake:
         elif effect == "poison":
             text = "-10 Punkte!"
             color = "violet"
+
+        elif effect == "speed_boost":
+            text = "Speed boost!"
+            color = ""
+
+        elif effect == "shrink":
+            text = "Kleiner geworden um 2 "
+            color = ""
 
         else:
             return
