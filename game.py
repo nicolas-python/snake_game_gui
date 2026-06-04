@@ -51,6 +51,12 @@ class snake:
         self.base_speed = get_speed(self.difficulty)
         self.speed = self.base_speed
 
+        self.cell_size = 20
+        if self.difficulty == "easy":
+            self.grid_mode = True
+        else:
+            self.grid_mode = False
+
         self.secret_map = False
         self.moving_obstacles_enabled = False
 
@@ -163,11 +169,21 @@ class snake:
 
         self.bg = self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
 
+        if self.grid_mode:
+            self.draw_grid()
+
         self.obstacle_objects = []
         #obstacle_objects = sichtbare Canvas-Objekte (Grafik/Bewegung)
         for x, y in self.obstacles:
             obj = self.canvas.create_rectangle(x, y, x + 20, y + 20,fill="gray")
             self.obstacle_objects.append(obj)
+
+    def draw_grid(self):
+        for x in range(0, 400, self.cell_size):
+            self.canvas.create_line(x, 0, x, 400, fill="#1f2a1f")
+
+        for y in range(0, 400, self.cell_size):
+            self.canvas.create_line(0, y, 400, y, fill="#1f2a1f")
 
 
     # steuerung
