@@ -527,27 +527,27 @@ class snake:
     def special_food_message(self, effect):
         if effect == "score":
             text = "+3 Punkte!"
-            color = "blue"
+            color = "gold"
 
         elif effect == "grow":
             text = "Gewachsen +2 Punkte!"
-            color = "green"
+            color = "gold"
 
         elif effect == "slow":
             text = "Verlangsamt!"
-            color = "light blue"
+            color = "gold"
 
         elif effect == "poison":
             text = "-10 Punkte!"
-            color = "violet"
+            color = "gold"
 
         elif effect == "speed_boost":
             text = "Speed boost!"
-            color = "white"
+            color = "gold"
 
         elif effect == "shrink":
             text = "Kleiner geworden um 2 "
-            color = ""
+            color = "gold"
 
         else:
             return
