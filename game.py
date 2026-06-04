@@ -475,11 +475,26 @@ class snake:
         self.speed_boost = False
 
     def check_collision(self, x, y):
+        if not self.moved:
+            return False
+
         #Wand
         if x < 0 or x > 380 or y < 0 or y > 380:
             return True
 
+        head_coords = self.canvas.coords(self.snake_part[0])
+        x1, y1, x2, y2 = head_coords
+
+        #selbstkollesion ab 2 (starte mit 2)
+        if len(self.snake_part) > 2:
+            for part in self.snake_part[1:]:
+                px1, py1, px2, py2 = self.canvas.coords(part)
+
+                if (x, y) == (px1, py1):
+                    return True
+
         #hindernisse beweglich
+        # secret map zuerst prüfen weil moving obstacles ersetzen normale Hindernisse
         if self.moving_obstacles_enabled:
             for obj in self.obstacle_objects:
                 ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
@@ -580,40 +595,6 @@ class snake:
         if self.stop_obstacles is not None:
             self.canvas.after_cancel(self.stop_obstacles)
             self.stop_obstacles = None
-
-    #Kollision
-    def collision(self):
-        if not self.moved:
-            return False
-
-        head_coords = self.canvas.coords(self.snake_part[0])
-        x1, y1, x2, y2 = head_coords
-
-        #wand kollision
-        if x1 < 0 or x1 >= 380 or y1 < 0 or y1 >= 380:  # 400-20=380 Snake ist 20px groß, letzter gültiger Startpunkt ist 380 sonst wäre der Kopf schon teilweise außerhalb, bevor die Kollision greift
-            return True
-
-        #kollesion mit sich selbst
-        for part in self.snake_part[1:]:
-            if self.canvas.coords(part) == head_coords:
-                return True
-
-        #hindernisse bewegend kollesion(secret map)
-        #secret map zuerst prüfen weil moving obstacles ersetzen normale Hindernisse
-        if self.moving_obstacles_enabled:
-            for obj in self.obstacle_objects:
-                ox1, oy1, ox2, oy2 = self.canvas.coords(obj)
-
-                if (x1, y1) == (ox1, oy1):
-                    return True
-
-        # hinderniss kollesion
-        else:
-            for ox, oy in self.obstacles:
-                if (x1, y1) == (ox, oy):
-                    return True
-
-        return False
 
     # vergleicht ob kopf und essen auf gleicher position sind
     def food_collision(self):
