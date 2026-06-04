@@ -330,7 +330,7 @@ class snake:
 
             break
 
-        food_type = random.randint(1, 5)
+        food_type = random.randint(1, 6)
 
         if food_type == 1:
             color = "blue"
@@ -353,7 +353,8 @@ class snake:
             effect = "speed_boost"
 
         elif food_type == 6:
-            color = "shrink"
+            color = "orange"
+            effect = "shrink"
 
         self.special_food_type = effect
 
@@ -454,6 +455,10 @@ class snake:
 
                 self.special_food_message(self.special_food_type)
 
+            elif self.special_food_type == "shrink":
+                self.shrink_snake()
+                self.special_food_message(self.special_food_type)
+
 
             self.canvas.delete(self.special_food)
             self.special_food = None
@@ -466,6 +471,8 @@ class snake:
 
         # aktualisierung
         self.stop_move_snake = self.canvas.after(current_speed, self.move_snake)
+
+
 
     def check_collision(self, x, y):
         if not self.moved:
@@ -620,6 +627,16 @@ class snake:
 
         for part in self.snake_part[1:]:
             self.canvas.itemconfig(part, fill=color)
+
+    def shrink_snake(self):
+        if len(self.snake_part) <= 2:
+            return
+
+        remove_count = min(2, len(self.snake_part) - 2)
+
+        for i in range(remove_count):
+            part = self.snake_part.pop()
+            self.canvas.delete(part)
 
     #game over
     def game_over(self):
