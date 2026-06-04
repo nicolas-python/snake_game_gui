@@ -40,8 +40,6 @@ class snake:
         self.special_food = None
         self.special_food_type = None
         self.special_food_cooldown = 15
-        self.slow_timer = 0
-        self.slow_active = False
         self.speed_boost = False
         self.effect_type = None
         self.effect_timer = 0
@@ -469,9 +467,6 @@ class snake:
         # aktualisierung
         self.stop_move_snake = self.canvas.after(current_speed, self.move_snake)
 
-    def reset_speed_boost(self):
-        self.speed_boost = False
-
     def check_collision(self, x, y):
         if not self.moved:
             return False
@@ -508,21 +503,6 @@ class snake:
 
         return False
 
-    def update_slow_timer(self):
-
-        if not self.slow_active:
-            return
-
-        self.effect_label.config(text=f"Slow aktiv: {self.slow_timer}s")
-        self.slow_timer -=1
-
-        if self.slow_timer < 0:
-            self.reset_speed()
-            self.slow_active = False
-            self.effect_label.config(text="")
-            return
-
-        self.canvas.after(1000, self.update_slow_timer)
 
     def update_effect_timer(self):
 
@@ -543,12 +523,6 @@ class snake:
             return
 
         self.canvas.after(1000, self.update_effect_timer)
-
-    def clear_effect_text(self):
-        self.effect_label.config(text="")
-
-    def reset_speed(self):
-        self.speed = self.base_speed
 
     def special_food_message(self, effect):
         if effect == "score":
