@@ -43,6 +43,8 @@ class snake:
         self.slow_timer = 0
         self.slow_active = False
         self.speed_boost = False
+        self.effect_type = None
+        self.effect_timer = 0
         self.stop_obstacles = None
         self.obstacle_direction = 1
         self.setup_game()
@@ -434,28 +436,24 @@ class snake:
                 self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "slow":
-                self.effect_label.config(text= "Slow aktiv!")
+                self.effect_type = "slow"
+                self.effect_timer = 10
                 self.speed = self.base_speed + 50
-
-                self.canvas.after(10000, self.reset_speed)
-
-                self.speed = self.base_speed + 50
-                self.slow_active = True
-                self.slow_timer = 10
-                self.update_slow_timer()
-
-                self.canvas.after(10000, self.clear_effect_text)
+                self.update_effect_timer()
 
                 self.special_food_message(self.special_food_type)
+
 
             elif self.special_food_type == "poison":
                 self.score -= 10
                 self.special_food_message(self.special_food_type)
 
             elif self.special_food_type == "speed_boost":
+                self.effect_type = "speed_boost"
+                self.effect_timer = 10
                 self.speed_boost = True
-                self.effect_label.config(text="Speed Boost!")
-                self.canvas.after(10000, self.reset_speed_boost)
+                self.update_effect_timer()
+
                 self.special_food_message(self.special_food_type)
 
 
@@ -525,6 +523,26 @@ class snake:
             return
 
         self.canvas.after(1000, self.update_slow_timer)
+
+    def update_effect_timer(self):
+
+        if self.effect_type is None:
+            return
+
+        self.effect_label.config(text=f"{self.effect_type}: {self.effect_timer}s")
+
+        self.effect_timer -= 1
+
+        if self.effect_timer <= 0:
+            self.effect_type = None
+            self.speed_boost = False
+            self.speed = self.base_speed
+
+            self.effect_label.config(text="")
+
+            return
+
+        self.canvas.after(1000, self.update_effect_timer)
 
     def clear_effect_text(self):
         self.effect_label.config(text="")
