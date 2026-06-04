@@ -543,7 +543,7 @@ class snake:
 
         elif effect == "speed_boost":
             text = "Speed boost!"
-            color = ""
+            color = "white"
 
         elif effect == "shrink":
             text = "Kleiner geworden um 2 "
