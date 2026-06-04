@@ -18,12 +18,12 @@ class snake_game:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Snake Game")
-        self.root.geometry("400x450")
+        self.root.geometry("400x500")
         self.root.configure(bg="#93c433")                     #configure= Widget-Eigenschaften ändern statt ersetzen
 
         # Background laden
         self.bg_image = Image.open("backgrounds/menu.png")
-        self.bg_image = self.bg_image.resize((400, 450))
+        self.bg_image = self.bg_image.resize((400, 500))
         self.bg_photo = ImageTk.PhotoImage(self.bg_image)
 
         # Background Label
